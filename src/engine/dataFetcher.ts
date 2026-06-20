@@ -2,6 +2,8 @@ import axios from 'axios';
 import type { DataMode, DataSnapshot, NewsSentiment } from '../store/worldStore';
 import { getLocationPreset, type LocationPreset } from './worldOptions';
 
+export type DemoDataMode = Exclude<DataMode, 'live' | 'custom'>;
+
 const COINGECKO = 'https://api.coingecko.com/api/v3';
 const WEATHER = 'https://api.open-meteo.com/v1/forecast';
 const GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc';
@@ -139,6 +141,10 @@ export async function pollAllData(
   mode: DataMode = 'live',
   location: LocationPreset = getLocationPreset('bangalore'),
 ): Promise<DataSnapshot> {
+  if (mode === 'custom') {
+    return buildDemoSnapshot('open', location);
+  }
+
   if (mode !== 'live') {
     return buildDemoSnapshot(mode, location);
   }
@@ -160,6 +166,8 @@ export async function pollAllData(
       ...crypto,
       ...weather,
       ...news,
+      assetName: 'Bitcoin',
+      assetSymbol: 'BTC',
       fearGreedScore,
       volatilityIndex,
       systemPressure: measureSystemPressure(volatilityIndex),
@@ -172,13 +180,15 @@ export async function pollAllData(
 }
 
 export function buildDemoSnapshot(
-  mode: Exclude<DataMode, 'live'>,
+  mode: DemoDataMode,
   location: LocationPreset = getLocationPreset('bangalore'),
 ): DataSnapshot {
   const now = Date.now();
   const latitudeHeat = Math.max(-8, Math.min(8, (18 - Math.abs(location.latitude)) * 0.22));
-  const scenarios: Record<Exclude<DataMode, 'live'>, DataSnapshot> = {
+  const scenarios: Record<DemoDataMode, DataSnapshot> = {
     crash: {
+      assetName: 'Bitcoin',
+      assetSymbol: 'BTC',
       btcPrice: 42000,
       btcChange24h: -14.7,
       ethPrice: 2100,
@@ -196,6 +206,8 @@ export function buildDemoSnapshot(
       lastUpdated: now,
     },
     bull: {
+      assetName: 'Bitcoin',
+      assetSymbol: 'BTC',
       btcPrice: 98000,
       btcChange24h: 11.4,
       ethPrice: 5200,
@@ -213,6 +225,8 @@ export function buildDemoSnapshot(
       lastUpdated: now,
     },
     storm: {
+      assetName: 'Bitcoin',
+      assetSymbol: 'BTC',
       btcPrice: 67500,
       btcChange24h: -4.8,
       ethPrice: 3300,
@@ -230,6 +244,8 @@ export function buildDemoSnapshot(
       lastUpdated: now,
     },
     open: {
+      assetName: 'Bitcoin',
+      assetSymbol: 'BTC',
       btcPrice: 71000,
       btcChange24h: 1.2,
       ethPrice: 3600,
@@ -247,6 +263,8 @@ export function buildDemoSnapshot(
       lastUpdated: now,
     },
     circuit: {
+      assetName: 'Bitcoin',
+      assetSymbol: 'BTC',
       btcPrice: 39000,
       btcChange24h: -21.3,
       ethPrice: 1800,
@@ -276,6 +294,8 @@ function buildFallbackSnapshot(): DataSnapshot {
   const volatilityIndex = deriveVolatility(btcChange, ethChange);
 
   return {
+    assetName: 'Bitcoin',
+    assetSymbol: 'BTC',
     btcPrice: 69000 + hourWave * 1200,
     btcChange24h: btcChange,
     ethPrice: 3400 + Math.cos(Date.now() / 1000 / 40) * 160,

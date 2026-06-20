@@ -53,6 +53,8 @@ export function dataToWorldPrompt(
   const volatility = getVolatilityModifier(data.volatilityIndex);
   const news = getNewsModifier(data.newsSentiment, data.newsHeadline);
   const system = getSystemModifier(data.systemPressure);
+  const asset = data.assetSymbol ?? 'BTC';
+  const custom = getCustomModifier(data);
   const location = controls.location.worldCue;
   const camera = `${controls.view.promptCue}, ${market.camera}`;
   const frame = controls.frame.promptCue;
@@ -65,6 +67,7 @@ export function dataToWorldPrompt(
         'apocalyptic void over an infinite black ocean',
         'market ruins half-submerged under violent lightning',
         'collapsing constellations above',
+        custom,
         frame,
         'extreme wind, reality tearing into dark glass fragments',
         camera,
@@ -85,11 +88,12 @@ export function dataToWorldPrompt(
       volatility,
       news,
       system,
+      custom,
       frame,
       camera,
       'photorealistic cinematic video, atmospheric depth, smooth temporal continuity, no text, no charts, no UI',
     ].join(', '),
-    reason: `${controls.location.shortLabel} ${controls.view.label}/${controls.frame.label}: BTC ${signed(data.btcChange24h)}%, fear ${data.fearGreedScore.toFixed(0)}, vol ${data.volatilityIndex.toFixed(0)}, weather ${data.weatherCode}, news ${data.newsSentiment}`,
+    reason: `${controls.location.shortLabel} ${controls.view.label}/${controls.frame.label}: ${asset} ${signed(data.btcChange24h)}%, fear ${data.fearGreedScore.toFixed(0)}, vol ${data.volatilityIndex.toFixed(0)}, weather ${data.weatherCode}, news ${data.newsSentiment}`,
   };
 }
 
@@ -187,6 +191,16 @@ function getSystemModifier(systemPressure: number): string {
   if (systemPressure > 75) return 'local system pressure appears as jittering geometry and heat shimmer';
   if (systemPressure > 45) return 'local system pressure appears as subtle scanline shimmer in the air';
   return 'local system pressure is low, image remains clean and steady';
+}
+
+function getCustomModifier(data: DataSnapshot): string {
+  const modifiers = [
+    data.assetSymbol ? `primary market signal is ${data.assetSymbol}` : '',
+    data.customNarrative ? `user-authored event: ${data.customNarrative}` : '',
+    data.worldBehavior ? `world behavior directive: ${data.worldBehavior}` : '',
+  ].filter(Boolean);
+
+  return modifiers.join(', ');
 }
 
 function signed(value: number): string {

@@ -394,9 +394,10 @@ button {
 }
 
 .location-popover {
-  position: absolute;
-  top: 40px;
-  left: 0;
+  position: fixed;
+  top: 66px;
+  left: max(18px, calc(50vw - 448px));
+  z-index: 45;
   width: 344px;
   border: 1px solid var(--panel-border-strong);
   background: rgba(5, 8, 12, 0.92);
@@ -940,6 +941,76 @@ button {
   opacity: 0.48;
 }
 
+.control-button--wide {
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+
+.custom-signal {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+  border-top: 1px solid var(--panel-border);
+  padding-top: 10px;
+}
+
+.custom-field {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.custom-field--wide {
+  grid-column: 1 / -1;
+}
+
+.custom-field span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.custom-field input,
+.custom-field select,
+.custom-field textarea {
+  width: 100%;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.055);
+  color: #fff;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 10px;
+  outline: none;
+}
+
+.custom-field input,
+.custom-field select {
+  min-height: 32px;
+  padding: 0 8px;
+}
+
+.custom-field textarea {
+  min-height: 54px;
+  resize: vertical;
+  padding: 8px;
+  line-height: 1.35;
+}
+
+.custom-field input[type='range'] {
+  min-height: 32px;
+  padding: 0;
+  accent-color: var(--cyan);
+}
+
+.custom-field select option {
+  background: #080b10;
+  color: #fff;
+}
+
 .boot-screen {
   display: grid;
   place-content: center;
@@ -1059,7 +1130,6 @@ button {
   }
 
   .location-popover {
-    position: fixed;
     top: 62px;
     left: 10px;
     width: calc(100vw - 20px);

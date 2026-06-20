@@ -13,6 +13,7 @@ GroundTruth turns live market, weather, news, and local system signals into real
 - Reactor models: `Helios` for cinematic world generation and `LingBot` for piloted drone mode.
 - Frame modes: `World`, `Card`, `Map`, `Signal`, and `Dream`.
 - Judge Run: a five-beat autoplay pitch sequence with cinematic captions and live prompt changes.
+- Custom signal composer: enter a ticker, event, market move, fear level, weather, and world behavior.
 - World events now live in the right-side rail on desktop so they do not cover the main HUD.
 
 ## Drone Controls
@@ -72,3 +73,5 @@ Live APIs can throttle during a demo. The override buttons inject deterministic 
 - `Circuit breaker`
 
 Use `Live feed` to hand control back to real data.
+
+Use `Custom signal` to create a user-authored market/world event such as `TSLA`, a shock headline, storm weather, and a collapse or dream behavior. Custom mode persists until `Live feed` or another override is selected.

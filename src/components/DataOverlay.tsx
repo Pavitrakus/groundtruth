@@ -45,6 +45,7 @@ export function DataOverlay() {
 
   const marketUp = dataSnapshot.btcChange24h >= 0;
   const TrendIcon = marketUp ? TrendingUp : TrendingDown;
+  const assetSymbol = dataSnapshot.assetSymbol ?? 'BTC';
 
   return (
     <aside className="hud">
@@ -81,7 +82,7 @@ export function DataOverlay() {
       ) : null}
       <DataRow
         icon={<TrendIcon size={15} />}
-        label="Bitcoin"
+        label={`${assetSymbol} market`}
         value={`$${Math.round(dataSnapshot.btcPrice).toLocaleString()}`}
         meta={`${marketUp ? '+' : ''}${dataSnapshot.btcChange24h.toFixed(2)}%`}
         tone={marketUp ? 'up' : 'down'}

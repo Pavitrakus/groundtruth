@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useReactor } from '@reactor-team/js-sdk';
-import { buildDemoSnapshot } from '../engine/dataFetcher';
+import { buildDemoSnapshot, type DemoDataMode } from '../engine/dataFetcher';
 import { dataToWorldPrompt } from '../engine/promptEngine';
 import {
   getFrameMode,
@@ -10,11 +10,10 @@ import {
   type LocationId,
   type ViewModeId,
 } from '../engine/worldOptions';
-import type { DataMode } from '../store/worldStore';
 import { useWorldStore } from '../store/worldStore';
 
 interface ShowcaseStep {
-  dataMode: Exclude<DataMode, 'live'>;
+  dataMode: DemoDataMode;
   durationMs: number;
   frameMode: FrameModeId;
   line: string;

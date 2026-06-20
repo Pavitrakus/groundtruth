@@ -3,7 +3,7 @@ import type { FrameModeId, LocationId, ViewModeId } from '../engine/worldOptions
 
 export type NewsSentiment = 'positive' | 'neutral' | 'negative' | 'crisis';
 export type WorldMood = 'dawn' | 'golden' | 'storm' | 'fire' | 'void' | 'aurora';
-export type DataMode = 'live' | 'crash' | 'bull' | 'storm' | 'open' | 'circuit';
+export type DataMode = 'live' | 'crash' | 'bull' | 'storm' | 'open' | 'circuit' | 'custom';
 export type ReactorModel = 'helios' | 'lingbot';
 export type PilotMovement = 'idle' | 'forward' | 'back' | 'strafe_left' | 'strafe_right';
 export type PilotLookHorizontal = 'idle' | 'left' | 'right';
@@ -14,6 +14,9 @@ export interface DataSnapshot {
   btcChange24h: number;
   ethPrice: number;
   ethChange24h: number;
+  assetName?: string;
+  assetSymbol?: string;
+  customNarrative?: string;
   fearGreedScore: number;
   weatherCode: number;
   weatherTemp: number;
@@ -23,7 +26,8 @@ export interface DataSnapshot {
   newsPulse: number;
   volatilityIndex: number;
   systemPressure: number;
-  dataSource: 'live' | 'fallback' | 'demo';
+  worldBehavior?: string;
+  dataSource: 'live' | 'fallback' | 'demo' | 'custom';
   lastUpdated: number;
 }
 

@@ -88,7 +88,10 @@ export function WorldOrchestrator() {
       const frameMode = stateBeforeFetch.frameMode;
       const controls = controlsFromState(stateBeforeFetch);
       const reactorModel = stateBeforeFetch.reactorModel;
-      const data = await pollAllData(mode, controls.location);
+      const data =
+        mode === 'custom' && stateBeforeFetch.dataSnapshot
+          ? { ...stateBeforeFetch.dataSnapshot, lastUpdated: Date.now() }
+          : await pollAllData(mode, controls.location);
       const { mood, prompt, reason } = dataToWorldPrompt(data, controls);
       const stateAfterFetch = useWorldStore.getState();
 

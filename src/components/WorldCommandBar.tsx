@@ -25,6 +25,7 @@ import {
   VIEW_MODES,
   WORLD_LOCATIONS,
   type FrameModeId,
+  type LocationId,
   type ViewModeId,
 } from '../engine/worldOptions';
 import { useWorldStore, type ReactorModel } from '../store/worldStore';
@@ -186,141 +187,157 @@ export function WorldCommandBar() {
   }
 
   return (
-    <header className="command-bar" aria-label="World controls">
-      <div className="command-bar__brand">
-        <span>GROUNDTRUTH</span>
-        <small>{activeLocation.shortLabel}</small>
-      </div>
+    <>
+      <header className="command-bar" aria-label="World controls">
+        <div className="command-bar__brand">
+          <span>GROUNDTRUTH</span>
+          <small>{activeLocation.shortLabel}</small>
+        </div>
 
-      <div className="command-bar__slot command-bar__slot--location">
+        <div className="command-bar__slot command-bar__slot--location">
+          <button
+            aria-expanded={locationOpen}
+            className="tool-button tool-button--wide"
+            onClick={() => setLocationOpen((open) => !open)}
+            title="Choose world location"
+            type="button"
+          >
+            <Globe2 size={15} />
+            {activeLocation.label}
+          </button>
+        </div>
+
+        <div className="command-bar__group" aria-label="Camera mode">
+          {VIEW_MODES.map((mode) => {
+            const Icon = VIEW_ICONS[mode.id];
+            return (
+              <button
+                className={`tool-button ${viewMode === mode.id ? 'tool-button--active' : ''}`}
+                key={mode.id}
+                onClick={() => void chooseView(mode.id)}
+                title={`${mode.label} camera`}
+                type="button"
+              >
+                <Icon size={15} />
+                {mode.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="command-bar__group" aria-label="Reactor model">
+          <button
+            className={`tool-button tool-button--model ${reactorModel === 'helios' ? 'tool-button--active' : ''}`}
+            onClick={() => chooseModel('helios')}
+            title="Use Helios world renderer"
+            type="button"
+          >
+            <Sparkles size={15} />
+            Helios
+          </button>
+          <button
+            className={`tool-button tool-button--model ${reactorModel === 'lingbot' ? 'tool-button--active' : ''}`}
+            onClick={() => chooseModel('lingbot')}
+            title="Use LingBot pilot mode"
+            type="button"
+          >
+            <Bot size={15} />
+            LingBot
+          </button>
+        </div>
+
+        <div className="command-bar__group" aria-label="World frame mode">
+          {FRAME_MODES.map((mode) => {
+            const Icon = FRAME_ICONS[mode.id];
+            return (
+              <button
+                className={`tool-button ${frameMode === mode.id ? 'tool-button--active' : ''}`}
+                key={mode.id}
+                onClick={() => void chooseFrame(mode.id)}
+                title={`${mode.label} frame`}
+                type="button"
+              >
+                <Icon size={15} />
+                {mode.label}
+              </button>
+            );
+          })}
+        </div>
+
         <button
-          aria-expanded={locationOpen}
-          className="tool-button tool-button--wide"
-          onClick={() => setLocationOpen((open) => !open)}
-          title="Choose world location"
+          className="tool-button tool-button--pulse"
+          onClick={() => void pushDirectorPrompt('Director pulse')}
+          title="Push the current controls to Reactor"
           type="button"
         >
-          <Globe2 size={15} />
-          {activeLocation.label}
+          {status === 'ready' ? <Sparkles size={15} /> : <Navigation size={15} />}
+          Pulse
         </button>
 
-        {locationOpen ? (
-          <div className="location-popover">
-            <div className="location-popover__head">
-              <Badge size={14} />
-              <span>PLACE LAYER</span>
-            </div>
-
-            <div className="mini-globe" aria-label="Interactive location globe">
-              <div className="mini-globe__grid" />
-              {WORLD_LOCATIONS.map((location) => (
-                <button
-                  aria-label={`Select ${location.label}`}
-                  className={`mini-globe__pin ${location.id === selectedLocationId ? 'mini-globe__pin--active' : ''}`}
-                  key={location.id}
-                  onClick={() => void chooseLocation(location.id)}
-                  style={{ left: `${location.pin.x}%`, top: `${location.pin.y}%` }}
-                  title={location.label}
-                  type="button"
-                >
-                  <span />
-                </button>
-              ))}
-            </div>
-
-            <div className="location-grid">
-              {WORLD_LOCATIONS.map((location) => (
-                <button
-                  className={`location-chip ${location.id === selectedLocationId ? 'location-chip--active' : ''}`}
-                  key={location.id}
-                  onClick={() => void chooseLocation(location.id)}
-                  type="button"
-                >
-                  <span>{location.shortLabel}</span>
-                  {location.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : null}
-      </div>
-
-      <div className="command-bar__group" aria-label="Camera mode">
-        {VIEW_MODES.map((mode) => {
-          const Icon = VIEW_ICONS[mode.id];
-          return (
-            <button
-              className={`tool-button ${viewMode === mode.id ? 'tool-button--active' : ''}`}
-              key={mode.id}
-              onClick={() => void chooseView(mode.id)}
-              title={`${mode.label} camera`}
-              type="button"
-            >
-              <Icon size={15} />
-              {mode.label}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="command-bar__group" aria-label="Reactor model">
         <button
-          className={`tool-button tool-button--model ${reactorModel === 'helios' ? 'tool-button--active' : ''}`}
-          onClick={() => chooseModel('helios')}
-          title="Use Helios world renderer"
+          className={`tool-button tool-button--showcase ${showcaseActive ? 'tool-button--active' : ''}`}
+          onClick={toggleShowcase}
+          title={showcaseActive ? 'Stop judge run' : 'Launch judge run'}
           type="button"
         >
-          <Sparkles size={15} />
-          Helios
+          {showcaseActive ? <Square size={14} /> : <Clapperboard size={15} />}
+          {showcaseActive ? 'Stop' : 'Run'}
         </button>
-        <button
-          className={`tool-button tool-button--model ${reactorModel === 'lingbot' ? 'tool-button--active' : ''}`}
-          onClick={() => chooseModel('lingbot')}
-          title="Use LingBot pilot mode"
-          type="button"
-        >
-          <Bot size={15} />
-          LingBot
-        </button>
+      </header>
+
+      {locationOpen ? (
+        <LocationPopover
+          selectedLocationId={selectedLocationId}
+          onChoose={(locationId) => void chooseLocation(locationId)}
+        />
+      ) : null}
+    </>
+  );
+}
+
+interface LocationPopoverProps {
+  onChoose: (locationId: LocationId) => void;
+  selectedLocationId: LocationId;
+}
+
+function LocationPopover({ onChoose, selectedLocationId }: LocationPopoverProps) {
+  return (
+    <div className="location-popover">
+      <div className="location-popover__head">
+        <Badge size={14} />
+        <span>PLACE LAYER</span>
       </div>
 
-      <div className="command-bar__group" aria-label="World frame mode">
-        {FRAME_MODES.map((mode) => {
-          const Icon = FRAME_ICONS[mode.id];
-          return (
-            <button
-              className={`tool-button ${frameMode === mode.id ? 'tool-button--active' : ''}`}
-              key={mode.id}
-              onClick={() => void chooseFrame(mode.id)}
-              title={`${mode.label} frame`}
-              type="button"
-            >
-              <Icon size={15} />
-              {mode.label}
-            </button>
-          );
-        })}
+      <div className="mini-globe" aria-label="Interactive location globe">
+        <div className="mini-globe__grid" />
+        {WORLD_LOCATIONS.map((location) => (
+          <button
+            aria-label={`Select ${location.label}`}
+            className={`mini-globe__pin ${location.id === selectedLocationId ? 'mini-globe__pin--active' : ''}`}
+            key={location.id}
+            onClick={() => onChoose(location.id)}
+            style={{ left: `${location.pin.x}%`, top: `${location.pin.y}%` }}
+            title={location.label}
+            type="button"
+          >
+            <span />
+          </button>
+        ))}
       </div>
 
-      <button
-        className="tool-button tool-button--pulse"
-        onClick={() => void pushDirectorPrompt('Director pulse')}
-        title="Push the current controls to Reactor"
-        type="button"
-      >
-        {status === 'ready' ? <Sparkles size={15} /> : <Navigation size={15} />}
-        Pulse
-      </button>
-
-      <button
-        className={`tool-button tool-button--showcase ${showcaseActive ? 'tool-button--active' : ''}`}
-        onClick={toggleShowcase}
-        title={showcaseActive ? 'Stop judge run' : 'Launch judge run'}
-        type="button"
-      >
-        {showcaseActive ? <Square size={14} /> : <Clapperboard size={15} />}
-        {showcaseActive ? 'Stop' : 'Run'}
-      </button>
-    </header>
+      <div className="location-grid">
+        {WORLD_LOCATIONS.map((location) => (
+          <button
+            className={`location-chip ${location.id === selectedLocationId ? 'location-chip--active' : ''}`}
+            key={location.id}
+            onClick={() => onChoose(location.id)}
+            type="button"
+          >
+            <span>{location.shortLabel}</span>
+            {location.label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
