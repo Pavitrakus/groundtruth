@@ -1,8 +1,8 @@
-# GroundTruth
+# Terra
 
 The world that is your data.
 
-GroundTruth turns live market, weather, news, and local system signals into real-time Helios world prompts. It is not a chart layer over video. The data becomes the environment.
+Terra turns live market, weather, news, and local system signals into real-time Helios world prompts. It is not a chart layer over video. The data becomes the environment.
 
 ## New Control Surface
 
@@ -15,6 +15,7 @@ GroundTruth turns live market, weather, news, and local system signals into real
 - Judge Run: a five-beat autoplay pitch sequence with cinematic captions and live prompt changes.
 - Custom signal composer: enter a ticker, event, market move, fear level, weather, and world behavior.
 - Soundscape: generated ambient audio, event stingers, and LingBot drone-engine feedback.
+- Terra boot animation: animated world engine loader while the live Reactor session is minted.
 - World events now live in the right-side rail on desktop so they do not cover the main HUD.
 
 ## Drone Controls
@@ -55,7 +56,7 @@ Production uses `api/token.ts` as a Vercel Function for `/api/token`; the local 
 2. Say: "This world has no pre-written scenes. It is built from live data, right now."
 3. Click `Run` for the Judge Run sequence, then let the caption layer narrate the transformation.
 4. Say: "Markets down 15 percent? This is what that feels like."
-5. Say: "Euphoria has a color. Panic has a color. GroundTruth makes you feel data, not read it."
+5. Say: "Euphoria has a color. Panic has a color. Terra makes you feel data, not read it."
 6. After the sequence, click `Drone`. Pilot the world with arrow keys.
 7. Close with: "This is what Bloomberg Terminal looks like in 2030. Not a chart. A world."
 

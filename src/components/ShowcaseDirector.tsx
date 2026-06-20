@@ -114,7 +114,7 @@ export function ShowcaseDirector() {
         liveStore.setShowcaseCue({
           line: 'The pitch is loaded. Take over manually or launch Drone for LingBot flight.',
           step: SHOWCASE_STEPS.length,
-          title: 'GroundTruth Is Ready',
+          title: 'Terra Is Ready',
           total: SHOWCASE_STEPS.length,
         });
         liveStore.setShowcaseActive(false);

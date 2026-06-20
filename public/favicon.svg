@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GroundTruth">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Terra">
   <defs>
     <linearGradient id="gt-ring" x1="8" x2="56" y1="8" y2="56" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f6f0d8"/>

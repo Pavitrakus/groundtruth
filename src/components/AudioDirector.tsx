@@ -140,9 +140,9 @@ export function AudioDirector() {
       void ensureRig();
     }
 
-    window.addEventListener('groundtruth:audio-arm', armAudio);
+    window.addEventListener('terra:audio-arm', armAudio);
     return () => {
-      window.removeEventListener('groundtruth:audio-arm', armAudio);
+      window.removeEventListener('terra:audio-arm', armAudio);
     };
   }, [ensureRig]);
 

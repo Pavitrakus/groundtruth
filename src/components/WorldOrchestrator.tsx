@@ -147,7 +147,7 @@ export function WorldOrchestrator() {
           const accepted = new Promise<void>((resolve) => {
             imageAcceptedResolve.current = resolve;
           });
-          const image = await uploadFile(seedImage, { name: 'groundtruth-lingbot-seed.png' });
+          const image = await uploadFile(seedImage, { name: 'terra-lingbot-seed.png' });
 
           await sendCommand('set_image', { image });
           await Promise.race([accepted, sleep(4500)]);

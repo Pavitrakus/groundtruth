@@ -51,7 +51,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`GroundTruth token server running on http://localhost:${port}`);
+  console.log(`Terra token server running on http://localhost:${port}`);
 });
 
 process.on('SIGTERM', () => {

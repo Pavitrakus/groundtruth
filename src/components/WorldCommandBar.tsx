@@ -187,12 +187,12 @@ export function WorldCommandBar() {
     setShowcaseActive(true);
     useWorldStore
       .getState()
-      .addLog('Judge run armed', 'A five-beat GroundTruth pitch sequence is starting.', 'system');
+      .addLog('Judge run armed', 'A five-beat Terra pitch sequence is starting.', 'system');
   }
 
   function toggleAudio() {
     const nextEnabled = !audioEnabled;
-    window.dispatchEvent(new CustomEvent('groundtruth:audio-arm'));
+    window.dispatchEvent(new CustomEvent('terra:audio-arm'));
     setAudioEnabled(nextEnabled);
     useWorldStore
       .getState()
@@ -209,7 +209,7 @@ export function WorldCommandBar() {
     <>
       <header className="command-bar" aria-label="World controls">
         <div className="command-bar__brand">
-          <span>GROUNDTRUTH</span>
+          <span>TERRA</span>
           <small>{activeLocation.shortLabel}</small>
         </div>
 
