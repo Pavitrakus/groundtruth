@@ -56,6 +56,7 @@ export function dataToWorldPrompt(
   const asset = data.assetSymbol ?? 'BTC';
   const custom = getCustomModifier(data);
   const location = controls.location.worldCue;
+  const locationLock = getLocationIdentityLock(controls.location);
   const camera = `${controls.view.promptCue}, ${market.camera}`;
   const frame = controls.frame.promptCue;
 
@@ -64,6 +65,7 @@ export function dataToWorldPrompt(
       mood: 'void',
       prompt: [
         controls.location.worldCue,
+        locationLock,
         'apocalyptic void over an infinite black ocean',
         'market ruins half-submerged under violent lightning',
         'collapsing constellations above',
@@ -81,6 +83,7 @@ export function dataToWorldPrompt(
     mood: market.mood,
     prompt: [
       location,
+      locationLock,
       market.landscape,
       market.light,
       weather,
@@ -102,14 +105,19 @@ export function getOpeningPrompt(
 ): string {
   return [
     controls.location.worldCue,
+    getLocationIdentityLock(controls.location),
     'a world waking up from live data',
-    'first light moving across a vast landscape of glass, grass, water, and distant city silhouettes',
+    'first light moving across the selected location, preserving its local architecture, terrain, weather, and street texture',
     controls.frame.promptCue,
     controls.view.promptCue,
     'subtle particles rising like signal noise',
     'warm dawn on the horizon',
     'cinematic photorealistic video, smooth continuous motion, no text',
   ].join(', ');
+}
+
+function getLocationIdentityLock(location: LocationPreset): string {
+  return `keep this unmistakably ${location.label}, preserve local geography and architecture, do not substitute a generic skyline or another famous city`;
 }
 
 function getWeatherMood(code: number): string {

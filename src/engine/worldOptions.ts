@@ -42,8 +42,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'BLR',
     latitude: 12.97,
     longitude: 77.59,
-    pin: { x: 67, y: 55 },
-    worldCue: 'Bangalore tech district at the edge of monsoon air, glass towers and wet streets',
+    pin: { x: 64, y: 53 },
+    worldCue:
+      'Bangalore after monsoon rain, rain-tree canopy, metro viaduct, wet asphalt, low-rise tech parks, scooter and red bus silhouettes, no desert, no Gulf skyline, no Burj-like tower',
   },
   {
     id: 'new-york',
@@ -51,8 +52,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'NYC',
     latitude: 40.71,
     longitude: -74.01,
-    pin: { x: 28, y: 38 },
-    worldCue: 'New York financial canyons, neon, steam, skyscraper silhouettes, Hudson light',
+    pin: { x: 26, y: 40 },
+    worldCue:
+      'New York financial district canyon streets, dense Manhattan skyscraper grid, steam vents, Hudson river light, yellow taxi silhouettes, no desert skyline',
   },
   {
     id: 'tokyo',
@@ -60,8 +62,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'TYO',
     latitude: 35.68,
     longitude: 139.69,
-    pin: { x: 78, y: 42 },
-    worldCue: 'Tokyo at night, layered crossings, towers, rain gloss, electric signage without readable text',
+    pin: { x: 82, y: 38 },
+    worldCue:
+      'Tokyo night crossing, layered elevated rail, lantern-like abstract signs with no readable text, rain gloss, compact vertical streets, no desert skyline',
   },
   {
     id: 'dubai',
@@ -69,8 +72,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'DXB',
     latitude: 25.2,
     longitude: 55.27,
-    pin: { x: 58, y: 47 },
-    worldCue: 'Dubai desert skyline, mirrored towers, heat shimmer, impossible engineered islands',
+    pin: { x: 56, y: 43 },
+    worldCue:
+      'Dubai desert-meets-sea skyline, mirrored supertall towers, palm-shaped islands, sand haze, heat shimmer, engineered luxury waterfront',
   },
   {
     id: 'london',
@@ -78,8 +82,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'LDN',
     latitude: 51.51,
     longitude: -0.13,
-    pin: { x: 46, y: 33 },
-    worldCue: 'London over the Thames, old stone, modern finance towers, fog and river reflections',
+    pin: { x: 43, y: 34 },
+    worldCue:
+      'London over the Thames, old stone bridges, fog, river reflections, finance towers behind historic silhouettes, cool drizzle',
   },
   {
     id: 'iceland',
@@ -87,8 +92,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'ICE',
     latitude: 64.96,
     longitude: -19.02,
-    pin: { x: 41, y: 25 },
-    worldCue: 'Iceland volcanic coast, black sand, glaciers, aurora and geothermal mist',
+    pin: { x: 36, y: 20 },
+    worldCue:
+      'Iceland volcanic coast, black sand beach, basalt cliffs, glaciers, geothermal mist, aurora over empty northern terrain',
   },
   {
     id: 'amazon',
@@ -96,8 +102,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'AMZ',
     latitude: -3.47,
     longitude: -62.22,
-    pin: { x: 34, y: 62 },
-    worldCue: 'Amazon rainforest canopy, rivers like bronze mirrors, humid green atmosphere',
+    pin: { x: 32, y: 66 },
+    worldCue:
+      'Amazon rainforest canopy, braided brown rivers, mist rising through dense jungle, humid green atmosphere, no city skyline',
   },
   {
     id: 'sahara',
@@ -105,8 +112,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'SAH',
     latitude: 23.42,
     longitude: 25.66,
-    pin: { x: 51, y: 49 },
-    worldCue: 'Sahara dunes, vast sand seas, distant caravan shadows, sun-scorched horizon',
+    pin: { x: 47, y: 57 },
+    worldCue:
+      'Sahara vast sand sea, dune ridges, caravan shadows, sun-scorched horizon, no skyscrapers, no wet streets',
   },
   {
     id: 'singapore',
@@ -114,8 +122,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'SIN',
     latitude: 1.35,
     longitude: 103.82,
-    pin: { x: 72, y: 61 },
-    worldCue: 'Singapore garden city, tropical towers, water, elevated greenery, humid night glow',
+    pin: { x: 76, y: 66 },
+    worldCue:
+      'Singapore garden city, tropical high-rises, bay water, elevated greenery, sky gardens, humid night glow, clean waterfront',
   },
   {
     id: 'alps',
@@ -123,8 +132,9 @@ export const WORLD_LOCATIONS: LocationPreset[] = [
     shortLabel: 'ALP',
     latitude: 46.82,
     longitude: 8.23,
-    pin: { x: 49, y: 37 },
-    worldCue: 'Swiss Alps, snow ridges, glassy lakes, clean air, sharp mountain light',
+    pin: { x: 52, y: 25 },
+    worldCue:
+      'Swiss Alps, snow ridges, alpine villages, glassy lakes, pine slopes, clean air, sharp mountain light, no city skyline',
   },
 ];
 

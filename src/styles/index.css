@@ -176,7 +176,7 @@ button {
 
 .world-stage--retargeting .world-video {
   z-index: 1;
-  opacity: 0.2;
+  opacity: 0.06;
   filter: blur(1.4px) saturate(0.74) contrast(0.92);
   transform: scale(1.026);
 }
@@ -235,16 +235,49 @@ button {
   mix-blend-mode: overlay;
 }
 
+.world-stage--retargeting .synthetic-world::before {
+  opacity: 0.84;
+}
+
+.world-stage--retargeting .synthetic-world::after {
+  opacity: 0.62;
+}
+
+.world-stage--loc-bangalore .synthetic-world__terrain {
+  background:
+    radial-gradient(ellipse at 18% 30%, rgba(91, 125, 84, 0.36), transparent 24%),
+    radial-gradient(ellipse at 78% 26%, rgba(79, 112, 78, 0.3), transparent 22%),
+    linear-gradient(176deg, rgba(36, 62, 50, 0.68), transparent 30%),
+    linear-gradient(22deg, rgba(6, 8, 8, 0.96) 0 40%, rgba(18, 20, 18, 0.96) 41% 58%, rgba(5, 7, 8, 0.98) 59%);
+}
+
 .world-stage--loc-bangalore .synthetic-world::before {
   background:
-    repeating-linear-gradient(90deg, transparent 0 58px, rgba(218, 220, 222, 0.16) 59px 62px, transparent 63px 116px),
-    linear-gradient(120deg, transparent 0 54%, rgba(143, 191, 158, 0.2) 55% 57%, transparent 58%);
+    repeating-linear-gradient(104deg, transparent 0 18px, rgba(218, 220, 222, 0.16) 19px 20px, transparent 21px 44px),
+    linear-gradient(178deg, transparent 0 51%, rgba(220, 224, 224, 0.22) 52% 54%, transparent 55%),
+    repeating-linear-gradient(90deg, transparent 0 54px, rgba(218, 220, 222, 0.14) 55px 58px, transparent 59px 112px),
+    linear-gradient(120deg, transparent 0 54%, rgba(143, 191, 158, 0.22) 55% 57%, transparent 58%);
+}
+
+.world-stage--loc-bangalore .synthetic-world::after {
+  background:
+    radial-gradient(ellipse at 16% 55%, rgba(92, 126, 84, 0.44), transparent 22%),
+    radial-gradient(ellipse at 72% 58%, rgba(75, 104, 76, 0.38), transparent 20%),
+    linear-gradient(10deg, transparent 0 58%, rgba(218, 220, 222, 0.26) 59% 62%, transparent 63%);
+  opacity: 0.58;
 }
 
 .world-stage--loc-new-york .synthetic-world::before {
   background:
     linear-gradient(90deg, transparent 0 6%, rgba(255, 255, 255, 0.08) 6% 7%, transparent 7% 11%) 0 38% / 115px 36% repeat-x,
     linear-gradient(180deg, transparent 0 48%, rgba(218, 220, 222, 0.18) 49% 50%, transparent 51%);
+}
+
+.world-stage--loc-new-york .synthetic-world::after {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(215, 215, 208, 0.12) 35px 42px, transparent 43px 72px),
+    linear-gradient(180deg, transparent 0 45%, rgba(255, 255, 255, 0.08) 46% 48%, transparent 49%);
+  opacity: 0.46;
 }
 
 .world-stage--loc-tokyo .synthetic-world::before {
@@ -254,10 +287,32 @@ button {
     repeating-linear-gradient(90deg, transparent 0 78px, rgba(185, 171, 132, 0.14) 79px 81px, transparent 82px 156px);
 }
 
+.world-stage--loc-tokyo .synthetic-world::after {
+  background:
+    linear-gradient(0deg, transparent 0 43%, rgba(218, 220, 222, 0.16) 44% 46%, transparent 47%),
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(255, 91, 95, 0.16) 47px 50px, transparent 51px 92px);
+  opacity: 0.5;
+}
+
+.world-stage--loc-dubai .synthetic-world__terrain {
+  background:
+    radial-gradient(ellipse at 68% 24%, rgba(185, 171, 132, 0.32), transparent 24%),
+    linear-gradient(178deg, rgba(104, 80, 42, 0.68), transparent 28%),
+    linear-gradient(18deg, rgba(55, 39, 20, 0.98) 0 42%, rgba(96, 70, 34, 0.94) 43% 58%, rgba(17, 15, 13, 0.98) 59%);
+}
+
 .world-stage--loc-dubai .synthetic-world::before {
   background:
-    linear-gradient(104deg, transparent 0 49%, rgba(185, 171, 132, 0.24) 50% 51%, transparent 52%),
-    repeating-linear-gradient(90deg, transparent 0 92px, rgba(255, 255, 255, 0.1) 93px 95px, transparent 96px 184px);
+    linear-gradient(92deg, transparent 0 48%, rgba(255, 255, 255, 0.24) 49% 50%, transparent 51%),
+    linear-gradient(104deg, transparent 0 56%, rgba(185, 171, 132, 0.24) 57% 58%, transparent 59%),
+    repeating-linear-gradient(90deg, transparent 0 92px, rgba(255, 255, 255, 0.12) 93px 98px, transparent 99px 184px);
+}
+
+.world-stage--loc-dubai .synthetic-world::after {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(185, 171, 132, 0.08) 19px 21px, transparent 22px 44px),
+    radial-gradient(ellipse at 54% 72%, rgba(185, 171, 132, 0.24), transparent 34%);
+  opacity: 0.42;
 }
 
 .world-stage--loc-london .synthetic-world::after {
@@ -273,10 +328,30 @@ button {
     linear-gradient(180deg, transparent 0 60%, rgba(255, 255, 255, 0.14) 61% 62%, transparent 63%);
 }
 
+.world-stage--loc-iceland .synthetic-world__terrain {
+  background:
+    linear-gradient(164deg, rgba(5, 5, 5, 0.92) 0 38%, rgba(34, 42, 43, 0.86) 39% 58%, rgba(232, 238, 238, 0.2) 59% 64%, rgba(3, 4, 5, 0.98) 65%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.08), transparent 42%);
+}
+
 .world-stage--loc-amazon .synthetic-world::before {
   background:
     linear-gradient(22deg, transparent 0 50%, rgba(143, 191, 158, 0.24) 51% 54%, transparent 55%),
     repeating-linear-gradient(110deg, rgba(143, 191, 158, 0.09) 0 16px, transparent 17px 44px);
+}
+
+.world-stage--loc-amazon .synthetic-world__terrain {
+  background:
+    radial-gradient(ellipse at 20% 22%, rgba(27, 83, 43, 0.72), transparent 28%),
+    radial-gradient(ellipse at 68% 18%, rgba(36, 104, 54, 0.62), transparent 26%),
+    linear-gradient(18deg, rgba(5, 26, 12, 0.98) 0 44%, rgba(15, 54, 24, 0.96) 45% 62%, rgba(5, 12, 7, 0.99) 63%);
+}
+
+.world-stage--loc-amazon .synthetic-world::after {
+  background:
+    linear-gradient(112deg, transparent 0 48%, rgba(100, 72, 36, 0.3) 49% 52%, transparent 53%),
+    repeating-linear-gradient(78deg, rgba(143, 191, 158, 0.08) 0 24px, transparent 25px 62px);
+  opacity: 0.5;
 }
 
 .world-stage--loc-sahara .synthetic-world__sky {
@@ -291,10 +366,24 @@ button {
     linear-gradient(180deg, transparent 0 55%, rgba(185, 171, 132, 0.12) 56%, transparent 68%);
 }
 
+.world-stage--loc-sahara .synthetic-world__terrain {
+  background:
+    radial-gradient(ellipse at 46% 18%, rgba(185, 171, 132, 0.34), transparent 32%),
+    linear-gradient(168deg, rgba(118, 86, 38, 0.9) 0 34%, rgba(74, 49, 22, 0.96) 35% 60%, rgba(23, 17, 10, 0.98) 61%);
+}
+
 .world-stage--loc-singapore .synthetic-world::before {
   background:
     repeating-linear-gradient(90deg, transparent 0 74px, rgba(143, 191, 158, 0.16) 75px 78px, transparent 79px 148px),
     linear-gradient(145deg, transparent 0 42%, rgba(218, 220, 222, 0.2) 43% 45%, transparent 46%);
+}
+
+.world-stage--loc-singapore .synthetic-world::after {
+  background:
+    radial-gradient(ellipse at 58% 56%, rgba(143, 191, 158, 0.2), transparent 22%),
+    repeating-linear-gradient(90deg, transparent 0 64px, rgba(218, 220, 222, 0.14) 65px 68px, transparent 69px 128px),
+    linear-gradient(0deg, transparent 0 62%, rgba(116, 155, 132, 0.26) 63% 66%, transparent 67%);
+  opacity: 0.46;
 }
 
 .world-stage--loc-alps .synthetic-world__terrain {

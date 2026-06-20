@@ -364,6 +364,7 @@ function LocationPopover({ onChoose, selectedLocationId }: LocationPopoverProps)
       <div className="location-grid">
         {WORLD_LOCATIONS.map((location) => (
           <button
+            aria-label={`Choose ${location.label}`}
             className={`location-chip ${location.id === selectedLocationId ? 'location-chip--active' : ''}`}
             key={location.id}
             onClick={() => onChoose(location.id)}
