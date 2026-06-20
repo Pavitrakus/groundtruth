@@ -37,6 +37,14 @@ Open `http://localhost:5173`.
 
 The Vite app proxies `/api/token` to the local token server on `http://localhost:3101`. Keep `REACTOR_API_KEY` in `.env`; do not put it in browser code.
 
+## Deploy On Vercel
+
+1. Import this repo into Vercel.
+2. Add `REACTOR_API_KEY` in Project Settings > Environment Variables.
+3. Deploy with the default Vite settings.
+
+Production uses `api/token.ts` as a Vercel Function for `/api/token`; the local `server/token.js` is only for `npm run dev`.
+
 ## Demo Flow
 
 1. Open the app and let the live HUD populate.
