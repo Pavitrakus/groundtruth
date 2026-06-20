@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ReactorView } from '@reactor-team/js-sdk';
 import { useWorldStore } from '../store/worldStore';
 
@@ -7,6 +8,7 @@ export function WorldView() {
   const isConnected = useWorldStore((state) => state.isConnected);
   const reactorModel = useWorldStore((state) => state.reactorModel);
   const modelLabel = reactorModel === 'lingbot' ? 'LingBot' : 'Helios';
+  const fitVideoToPhone = usePhoneVideoFit();
 
   return (
     <div className={`world-stage world-stage--${worldMood} world-stage--frame-${frameMode}`}>
@@ -22,7 +24,7 @@ export function WorldView() {
 
       <ReactorView
         className="world-video"
-        videoObjectFit="cover"
+        videoObjectFit={fitVideoToPhone ? 'contain' : 'cover'}
         muted
         track="main_video"
       />
@@ -38,4 +40,19 @@ export function WorldView() {
       ) : null}
     </div>
   );
+}
+
+function usePhoneVideoFit() {
+  const [shouldFitVideo, setShouldFitVideo] = useState(() => window.matchMedia('(max-width: 920px)').matches);
+
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 920px)');
+    const sync = () => setShouldFitVideo(query.matches);
+
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+
+  return shouldFitVideo;
 }

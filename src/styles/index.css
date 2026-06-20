@@ -1510,6 +1510,15 @@ button {
 }
 
 @media (max-width: 920px) {
+  :root {
+    --mobile-stage-height: min(58svh, clamp(240px, 72vw, 430px));
+    --mobile-gutter: 10px;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     overflow-x: hidden;
     overflow-y: auto;
@@ -1521,35 +1530,83 @@ button {
     height: auto;
     overflow-x: hidden;
     overflow-y: visible;
-    padding-top: 58svh;
+    padding-top: var(--mobile-stage-height);
   }
 
   .world-stage {
     position: fixed;
-    height: 58svh;
+    width: 100vw;
+    height: var(--mobile-stage-height);
+    min-height: 0;
+    border-bottom: 1px solid rgba(98, 216, 255, 0.16);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.38);
+  }
+
+  .world-video {
+    background: #020304;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .world-grade {
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.36), transparent 18% 82%, rgba(0, 0, 0, 0.36)),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.36), transparent 32% 70%, rgba(0, 0, 0, 0.42));
+  }
+
+  .world-standby {
+    top: 58%;
+    width: max-content;
+    max-width: calc(100vw - 36px);
   }
 
   .command-bar {
-    top: 10px;
-    width: calc(100vw - 20px);
+    position: fixed;
+    top: max(8px, env(safe-area-inset-top, 0px));
+    width: calc(100vw - (var(--mobile-gutter) * 2));
+    max-width: none;
+    min-height: 42px;
+    padding: 5px;
     justify-content: flex-start;
   }
 
   .command-bar__brand {
-    min-width: 122px;
+    min-width: 94px;
+    padding: 0 8px 0 5px;
+  }
+
+  .command-bar__group {
+    gap: 3px;
+    padding-left: 6px;
+  }
+
+  .tool-button {
+    min-width: 58px;
+    height: 30px;
+    padding-inline: 7px;
+  }
+
+  .tool-button--wide {
+    min-width: 124px;
+  }
+
+  .tool-button--sound {
+    min-width: 70px;
   }
 
   .location-popover {
-    top: 62px;
-    left: 10px;
-    width: calc(100vw - 20px);
+    top: max(58px, calc(env(safe-area-inset-top, 0px) + 54px));
+    left: var(--mobile-gutter);
+    width: calc(100vw - (var(--mobile-gutter) * 2));
+    max-height: calc(100svh - 72px);
+    overflow: auto;
   }
 
   .overlay {
     position: relative;
     inset: auto;
-    width: calc(100vw - 24px);
-    margin: 12px;
+    width: calc(100vw - (var(--mobile-gutter) * 2));
+    margin: var(--mobile-gutter);
   }
 
   .overlay--top-left,
@@ -1576,18 +1633,64 @@ button {
     position: relative;
     inset: auto;
     min-width: 0;
-    margin: 12px;
+    width: calc(100vw - (var(--mobile-gutter) * 2));
+    margin: var(--mobile-gutter);
     transform: none;
   }
 
   .world-log {
     max-height: none;
   }
+
+  .data-row__value,
+  .world-log__entry p,
+  .world-log__empty {
+    white-space: normal;
+  }
 }
 
 @media (max-width: 520px) {
+  :root {
+    --mobile-gutter: 8px;
+  }
+
+  .command-bar {
+    min-height: 40px;
+    padding: 4px;
+  }
+
+  .command-bar__brand {
+    min-width: 82px;
+    gap: 5px;
+  }
+
+  .command-bar__brand small {
+    font-size: 9px;
+  }
+
+  .tool-button {
+    min-width: 52px;
+    gap: 5px;
+    padding-inline: 6px;
+  }
+
+  .tool-button--wide {
+    min-width: 112px;
+  }
+
+  .tool-button--model,
+  .tool-button--sound {
+    min-width: 64px;
+  }
+
   .control-panel__grid {
     grid-template-columns: 1fr;
+  }
+
+  .hud,
+  .world-log,
+  .control-panel {
+    padding: 11px;
   }
 
   .hud__mood {
