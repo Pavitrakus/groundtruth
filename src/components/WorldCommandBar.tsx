@@ -168,7 +168,7 @@ export function WorldCommandBar() {
       .addLog(
         `${MODEL_LABELS[model]} requested`,
         model === 'lingbot'
-          ? 'LingBot cockpit will reboot with arrow-key pilot controls.'
+          ? 'LingBot cockpit will reboot with desktop keys and phone joysticks.'
           : 'Helios stream will reboot with director prompt scheduling.',
         'system',
       );

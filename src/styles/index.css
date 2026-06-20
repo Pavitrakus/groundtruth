@@ -870,6 +870,119 @@ button {
   transition: width 120ms ease;
 }
 
+.pilot-joysticks {
+  display: none;
+}
+
+.pilot-joystick {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 128px;
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(218, 220, 222, 0.1), transparent 34%),
+    rgba(255, 255, 255, 0.045);
+  touch-action: none;
+  user-select: none;
+}
+
+.pilot-joystick::before {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  content: '';
+}
+
+.pilot-joystick--active {
+  border-color: rgba(218, 220, 222, 0.42);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(218, 220, 222, 0.16), transparent 40%),
+    rgba(255, 255, 255, 0.07);
+}
+
+.pilot-joystick--boost {
+  border-color: rgba(185, 171, 132, 0.48);
+}
+
+.pilot-joystick__label {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pilot-joystick__base {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 86px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.07), transparent 34%),
+    rgba(0, 0, 0, 0.16);
+}
+
+.pilot-joystick__axis {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  content: '';
+}
+
+.pilot-joystick__axis--x {
+  width: 62%;
+  height: 1px;
+}
+
+.pilot-joystick__axis--y {
+  width: 1px;
+  height: 62%;
+}
+
+.pilot-joystick__thumb {
+  position: absolute;
+  width: 34px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.34), transparent 28%),
+    rgba(218, 220, 222, 0.72);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
+  transform: translate(
+    calc(var(--joystick-x, 0) * 28px),
+    calc(var(--joystick-y, 0) * 28px)
+  );
+  transition:
+    background 120ms ease,
+    box-shadow 120ms ease,
+    transform 90ms ease;
+}
+
+.pilot-joystick--active .pilot-joystick__thumb {
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.42), transparent 28%),
+    rgba(244, 244, 240, 0.88);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.4),
+    0 0 18px rgba(218, 220, 222, 0.24);
+}
+
+.pilot-joystick--boost .pilot-joystick__thumb {
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.4), transparent 28%),
+    rgba(185, 171, 132, 0.9);
+}
+
 .pilot-pad {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1726,6 +1839,47 @@ button {
     width: calc(100vw - (var(--mobile-gutter) * 2));
     margin: var(--mobile-gutter);
     transform: none;
+  }
+
+  .pilot-overlay--live {
+    position: fixed;
+    right: var(--mobile-gutter);
+    bottom: max(10px, env(safe-area-inset-bottom, 0px));
+    left: var(--mobile-gutter);
+    z-index: 34;
+    width: auto;
+    margin: 0;
+    padding: 10px;
+  }
+
+  .pilot-overlay--live .pilot-pad,
+  .pilot-overlay--live .pilot-overlay__keys {
+    display: none;
+  }
+
+  .pilot-overlay--live .pilot-joysticks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .pilot-overlay--live .pilot-overlay__status,
+  .pilot-overlay--live .pilot-overlay__state {
+    font-size: 9px;
+  }
+
+  .pilot-overlay--live .pilot-overlay__state {
+    margin-top: 7px;
+    padding: 7px 0;
+  }
+
+  .pilot-overlay--live .pilot-joystick {
+    min-height: clamp(104px, 28vw, 138px);
+  }
+
+  .pilot-overlay--live .pilot-joystick__base {
+    width: clamp(76px, 21vw, 94px);
   }
 
   .world-log {
