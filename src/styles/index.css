@@ -1,19 +1,19 @@
 :root {
-  --panel-bg: rgba(5, 8, 12, 0.76);
-  --panel-border: rgba(232, 238, 244, 0.14);
-  --panel-border-strong: rgba(232, 238, 244, 0.26);
-  --text: rgba(245, 248, 250, 0.92);
-  --muted: rgba(215, 224, 230, 0.58);
-  --faint: rgba(215, 224, 230, 0.34);
-  --up: #38e88b;
-  --down: #ff5b5f;
-  --warn: #ffb34d;
-  --cyan: #62d8ff;
-  --gold: #f2cb5c;
+  --panel-bg: rgba(14, 15, 17, 0.78);
+  --panel-border: rgba(229, 229, 224, 0.13);
+  --panel-border-strong: rgba(229, 229, 224, 0.24);
+  --text: rgba(244, 244, 240, 0.92);
+  --muted: rgba(215, 215, 208, 0.6);
+  --faint: rgba(215, 215, 208, 0.36);
+  --up: #8fbf9e;
+  --down: #dc7478;
+  --warn: #c99b62;
+  --accent: #d7d7d2;
+  --gold: #b7aa88;
   --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
   --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text);
-  background: #020304;
+  background: #050506;
   font-family: var(--sans);
   font-synthesis: none;
   line-height: 1.4;
@@ -49,7 +49,7 @@ button {
   width: 100%;
   height: 100svh;
   overflow: hidden;
-  background: #030406;
+  background: #070708;
 }
 
 .world-stage {
@@ -60,7 +60,7 @@ button {
   --terra-signal-speed: 7s;
   --terra-sun-x: 66%;
   --terra-sun-y: 18%;
-  background: #050609;
+  background: #070809;
 }
 
 .world-stage::after {
@@ -69,8 +69,8 @@ button {
   z-index: 5;
   pointer-events: none;
   background:
-    radial-gradient(circle at var(--terra-sun-x) var(--terra-sun-y), rgba(98, 216, 255, 0.24), transparent 22%),
-    linear-gradient(110deg, transparent 0 42%, rgba(242, 203, 92, 0.12) 43% 44%, transparent 45%);
+    radial-gradient(circle at var(--terra-sun-x) var(--terra-sun-y), rgba(218, 220, 222, 0.24), transparent 22%),
+    linear-gradient(110deg, transparent 0 42%, rgba(185, 171, 132, 0.12) 43% 44%, transparent 45%);
   content: '';
   opacity: 0;
   mix-blend-mode: screen;
@@ -99,7 +99,7 @@ button {
   inset: 0;
   z-index: 1;
   overflow: hidden;
-  background: #101319;
+  background: #121314;
   filter: hue-rotate(var(--terra-hue)) saturate(1.08);
   transform: scale(1);
   transition:
@@ -120,7 +120,7 @@ button {
   height: 62%;
   background:
     radial-gradient(circle at var(--terra-sun-x) var(--terra-sun-y), rgba(252, 204, 112, 0.34), transparent 21%),
-    linear-gradient(180deg, rgba(74, 93, 114, 0.75), rgba(20, 24, 30, 0.96));
+    linear-gradient(180deg, rgba(86, 88, 87, 0.75), rgba(23, 24, 25, 0.96));
   transition: background 1.8s ease;
 }
 
@@ -128,7 +128,7 @@ button {
   top: 42%;
   height: 24%;
   background:
-    linear-gradient(90deg, transparent 0 10%, rgba(241, 207, 111, 0.32) 22%, transparent 36% 52%, rgba(93, 216, 255, 0.22) 70%, transparent 90%),
+    linear-gradient(90deg, transparent 0 10%, rgba(185, 171, 132, 0.32) 22%, transparent 36% 52%, rgba(218, 220, 222, 0.22) 70%, transparent 90%),
     linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08), transparent);
   filter: blur(14px);
   animation: horizonDrift 14s ease-in-out infinite alternate;
@@ -145,8 +145,8 @@ button {
 .synthetic-world__signal {
   width: 34vw;
   height: 2px;
-  background: rgba(98, 216, 255, 0.62);
-  box-shadow: 0 0 28px rgba(98, 216, 255, 0.58);
+  background: rgba(218, 220, 222, 0.62);
+  box-shadow: 0 0 28px rgba(218, 220, 222, 0.58);
   transform: rotate(-14deg);
   animation: signalSweep var(--terra-signal-speed) linear infinite;
 }
@@ -197,8 +197,8 @@ button {
   width: 18vw;
   aspect-ratio: 1;
   background:
-    radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(98, 216, 255, 0.34) 43% 45%, transparent 46%),
-    conic-gradient(from 20deg, transparent, rgba(242, 203, 92, 0.28), transparent, rgba(98, 216, 255, 0.3), transparent);
+    radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(218, 220, 222, 0.34) 43% 45%, transparent 46%),
+    conic-gradient(from 20deg, transparent, rgba(185, 171, 132, 0.28), transparent, rgba(218, 220, 222, 0.3), transparent);
   animation: dreamRotate 18s linear infinite;
 }
 
@@ -207,7 +207,7 @@ button {
   top: 28%;
   width: 24vw;
   height: 10vw;
-  background: linear-gradient(90deg, transparent, rgba(98, 216, 255, 0.26), transparent);
+  background: linear-gradient(90deg, transparent, rgba(218, 220, 222, 0.26), transparent);
   transform: rotate(-18deg);
   animation: dreamFloat 9s ease-in-out infinite alternate;
 }
@@ -237,26 +237,26 @@ button {
 
 .world-stage--loc-bangalore .synthetic-world::before {
   background:
-    repeating-linear-gradient(90deg, transparent 0 58px, rgba(98, 216, 255, 0.16) 59px 62px, transparent 63px 116px),
-    linear-gradient(120deg, transparent 0 54%, rgba(56, 232, 139, 0.2) 55% 57%, transparent 58%);
+    repeating-linear-gradient(90deg, transparent 0 58px, rgba(218, 220, 222, 0.16) 59px 62px, transparent 63px 116px),
+    linear-gradient(120deg, transparent 0 54%, rgba(143, 191, 158, 0.2) 55% 57%, transparent 58%);
 }
 
 .world-stage--loc-new-york .synthetic-world::before {
   background:
     linear-gradient(90deg, transparent 0 6%, rgba(255, 255, 255, 0.08) 6% 7%, transparent 7% 11%) 0 38% / 115px 36% repeat-x,
-    linear-gradient(180deg, transparent 0 48%, rgba(98, 216, 255, 0.18) 49% 50%, transparent 51%);
+    linear-gradient(180deg, transparent 0 48%, rgba(218, 220, 222, 0.18) 49% 50%, transparent 51%);
 }
 
 .world-stage--loc-tokyo .synthetic-world::before {
   background:
     linear-gradient(124deg, transparent 0 45%, rgba(255, 91, 95, 0.2) 46% 47%, transparent 48%),
-    linear-gradient(58deg, transparent 0 52%, rgba(98, 216, 255, 0.24) 53% 54%, transparent 55%),
-    repeating-linear-gradient(90deg, transparent 0 78px, rgba(242, 203, 92, 0.14) 79px 81px, transparent 82px 156px);
+    linear-gradient(58deg, transparent 0 52%, rgba(218, 220, 222, 0.24) 53% 54%, transparent 55%),
+    repeating-linear-gradient(90deg, transparent 0 78px, rgba(185, 171, 132, 0.14) 79px 81px, transparent 82px 156px);
 }
 
 .world-stage--loc-dubai .synthetic-world::before {
   background:
-    linear-gradient(104deg, transparent 0 49%, rgba(242, 203, 92, 0.24) 50% 51%, transparent 52%),
+    linear-gradient(104deg, transparent 0 49%, rgba(185, 171, 132, 0.24) 50% 51%, transparent 52%),
     repeating-linear-gradient(90deg, transparent 0 92px, rgba(255, 255, 255, 0.1) 93px 95px, transparent 96px 184px);
 }
 
@@ -269,32 +269,32 @@ button {
 
 .world-stage--loc-iceland .synthetic-world::before {
   background:
-    linear-gradient(106deg, transparent 0 28%, rgba(56, 232, 139, 0.25) 29% 31%, transparent 32% 58%, rgba(98, 216, 255, 0.18) 59% 61%, transparent 62%),
+    linear-gradient(106deg, transparent 0 28%, rgba(143, 191, 158, 0.25) 29% 31%, transparent 32% 58%, rgba(218, 220, 222, 0.18) 59% 61%, transparent 62%),
     linear-gradient(180deg, transparent 0 60%, rgba(255, 255, 255, 0.14) 61% 62%, transparent 63%);
 }
 
 .world-stage--loc-amazon .synthetic-world::before {
   background:
-    linear-gradient(22deg, transparent 0 50%, rgba(56, 232, 139, 0.24) 51% 54%, transparent 55%),
-    repeating-linear-gradient(110deg, rgba(56, 232, 139, 0.09) 0 16px, transparent 17px 44px);
+    linear-gradient(22deg, transparent 0 50%, rgba(143, 191, 158, 0.24) 51% 54%, transparent 55%),
+    repeating-linear-gradient(110deg, rgba(143, 191, 158, 0.09) 0 16px, transparent 17px 44px);
 }
 
 .world-stage--loc-sahara .synthetic-world__sky {
   background:
-    radial-gradient(circle at 68% 20%, rgba(242, 203, 92, 0.5), transparent 22%),
+    radial-gradient(circle at 68% 20%, rgba(185, 171, 132, 0.5), transparent 22%),
     linear-gradient(180deg, rgba(112, 86, 45, 0.82), rgba(25, 20, 14, 1));
 }
 
 .world-stage--loc-sahara .synthetic-world::before {
   background:
-    repeating-linear-gradient(168deg, transparent 0 78px, rgba(242, 203, 92, 0.16) 79px 86px, transparent 87px 160px),
-    linear-gradient(180deg, transparent 0 55%, rgba(242, 203, 92, 0.12) 56%, transparent 68%);
+    repeating-linear-gradient(168deg, transparent 0 78px, rgba(185, 171, 132, 0.16) 79px 86px, transparent 87px 160px),
+    linear-gradient(180deg, transparent 0 55%, rgba(185, 171, 132, 0.12) 56%, transparent 68%);
 }
 
 .world-stage--loc-singapore .synthetic-world::before {
   background:
-    repeating-linear-gradient(90deg, transparent 0 74px, rgba(56, 232, 139, 0.16) 75px 78px, transparent 79px 148px),
-    linear-gradient(145deg, transparent 0 42%, rgba(98, 216, 255, 0.2) 43% 45%, transparent 46%);
+    repeating-linear-gradient(90deg, transparent 0 74px, rgba(143, 191, 158, 0.16) 75px 78px, transparent 79px 148px),
+    linear-gradient(145deg, transparent 0 42%, rgba(218, 220, 222, 0.2) 43% 45%, transparent 46%);
 }
 
 .world-stage--loc-alps .synthetic-world__terrain {
@@ -306,7 +306,7 @@ button {
 .world-stage--loc-alps .synthetic-world::before {
   background:
     linear-gradient(132deg, transparent 0 39%, rgba(255, 255, 255, 0.28) 40% 42%, transparent 43%),
-    linear-gradient(48deg, transparent 0 55%, rgba(98, 216, 255, 0.16) 56% 57%, transparent 58%);
+    linear-gradient(48deg, transparent 0 55%, rgba(218, 220, 222, 0.16) 56% 57%, transparent 58%);
 }
 
 .world-stage--fire .synthetic-world__sky {
@@ -318,7 +318,7 @@ button {
 .world-stage--storm .synthetic-world__sky,
 .world-stage--void .synthetic-world__sky {
   background:
-    radial-gradient(circle at 24% 18%, rgba(98, 216, 255, 0.16), transparent 18%),
+    radial-gradient(circle at 24% 18%, rgba(218, 220, 222, 0.16), transparent 18%),
     linear-gradient(180deg, rgba(23, 35, 50, 0.94), rgba(4, 5, 8, 1));
 }
 
@@ -330,21 +330,21 @@ button {
 
 .world-stage--aurora .synthetic-world__sky {
   background:
-    radial-gradient(circle at 70% 22%, rgba(98, 216, 255, 0.34), transparent 18%),
-    radial-gradient(circle at 30% 18%, rgba(242, 203, 92, 0.28), transparent 20%),
+    radial-gradient(circle at 70% 22%, rgba(218, 220, 222, 0.34), transparent 18%),
+    radial-gradient(circle at 30% 18%, rgba(185, 171, 132, 0.28), transparent 20%),
     linear-gradient(180deg, rgba(18, 44, 48, 0.95), rgba(10, 7, 22, 1));
 }
 
 .world-stage--frame-dream .synthetic-world__sky {
   background:
-    radial-gradient(circle at 20% 22%, rgba(56, 232, 139, 0.24), transparent 20%),
-    radial-gradient(circle at 74% 18%, rgba(242, 203, 92, 0.36), transparent 18%),
+    radial-gradient(circle at 20% 22%, rgba(143, 191, 158, 0.24), transparent 20%),
+    radial-gradient(circle at 74% 18%, rgba(185, 171, 132, 0.36), transparent 18%),
     linear-gradient(180deg, rgba(24, 28, 48, 0.94), rgba(5, 7, 12, 1));
 }
 
 .world-stage--frame-dream .synthetic-world__horizon {
   background:
-    linear-gradient(90deg, transparent 0 6%, rgba(242, 203, 92, 0.38) 20%, transparent 34% 50%, rgba(98, 216, 255, 0.3) 68%, transparent 92%),
+    linear-gradient(90deg, transparent 0 6%, rgba(185, 171, 132, 0.38) 20%, transparent 34% 50%, rgba(218, 220, 222, 0.3) 68%, transparent 92%),
     linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
   filter: blur(18px);
 }
@@ -444,7 +444,8 @@ button {
   overflow-x: auto;
   overflow-y: visible;
   border: 1px solid var(--panel-border);
-  background: rgba(5, 8, 12, 0.74);
+  border-radius: 8px;
+  background: rgba(14, 15, 17, 0.78);
   padding: 6px;
   transform: translateX(-50%);
   backdrop-filter: blur(18px);
@@ -471,7 +472,7 @@ button {
 }
 
 .command-bar__brand small {
-  color: var(--cyan);
+  color: var(--accent);
   font-size: 10px;
 }
 
@@ -496,6 +497,7 @@ button {
   min-width: 66px;
   height: 30px;
   border: 1px solid transparent;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.055);
   padding: 0 8px;
   color: rgba(255, 255, 255, 0.74);
@@ -512,8 +514,8 @@ button {
 
 .tool-button:hover,
 .tool-button--active {
-  border-color: rgba(98, 216, 255, 0.48);
-  background: rgba(98, 216, 255, 0.13);
+  border-color: rgba(218, 220, 222, 0.48);
+  background: rgba(218, 220, 222, 0.13);
   color: #fff;
 }
 
@@ -524,7 +526,7 @@ button {
 
 .tool-button--pulse {
   min-width: 70px;
-  border-color: rgba(242, 203, 92, 0.35);
+  border-color: rgba(185, 171, 132, 0.35);
   color: #fff;
 }
 
@@ -534,13 +536,13 @@ button {
 
 .tool-button--showcase {
   min-width: 62px;
-  border-color: rgba(56, 232, 139, 0.34);
+  border-color: rgba(143, 191, 158, 0.34);
   color: #fff;
 }
 
 .tool-button--sound {
   min-width: 76px;
-  border-color: rgba(98, 216, 255, 0.28);
+  border-color: rgba(218, 220, 222, 0.28);
 }
 
 .location-popover {
@@ -551,7 +553,7 @@ button {
   width: 344px;
   border: 1px solid var(--panel-border-strong);
   border-radius: 8px;
-  background: rgba(5, 8, 12, 0.92);
+  background: rgba(14, 15, 17, 0.94);
   padding: 12px;
   backdrop-filter: blur(18px);
   box-shadow: 0 22px 80px rgba(0, 0, 0, 0.42);
@@ -574,22 +576,22 @@ button {
   height: 156px;
   margin: 12px auto;
   overflow: hidden;
-  border: 1px solid rgba(98, 216, 255, 0.24);
+  border: 1px solid rgba(218, 220, 222, 0.24);
   border-radius: 50%;
   background:
     radial-gradient(circle at 35% 26%, rgba(255, 255, 255, 0.28), transparent 10%),
-    radial-gradient(circle at 62% 52%, rgba(56, 232, 139, 0.18), transparent 28%),
-    linear-gradient(140deg, rgba(15, 48, 59, 1), rgba(2, 6, 12, 1));
+    radial-gradient(circle at 62% 52%, rgba(143, 191, 158, 0.12), transparent 28%),
+    linear-gradient(140deg, rgba(34, 35, 36, 1), rgba(7, 8, 9, 1));
   box-shadow:
     inset -22px -24px 44px rgba(0, 0, 0, 0.62),
-    0 0 44px rgba(98, 216, 255, 0.12);
+    0 0 44px rgba(218, 220, 222, 0.12);
 }
 
 .mini-globe::before,
 .mini-globe::after {
   position: absolute;
   inset: 12%;
-  border: 1px solid rgba(98, 216, 255, 0.16);
+  border: 1px solid rgba(218, 220, 222, 0.16);
   border-radius: 50%;
   content: '';
   pointer-events: none;
@@ -632,8 +634,8 @@ button {
   height: 7px;
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 12px rgba(98, 216, 255, 0.82);
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(218, 220, 222, 0.82);
   transition:
     background 160ms ease,
     box-shadow 160ms ease,
@@ -649,7 +651,7 @@ button {
   width: 10px;
   height: 10px;
   background: var(--gold);
-  box-shadow: 0 0 18px rgba(242, 203, 92, 0.9);
+  box-shadow: 0 0 18px rgba(185, 171, 132, 0.9);
   animation: locationPin 1.4s ease-in-out infinite;
 }
 
@@ -680,14 +682,14 @@ button {
 }
 
 .location-chip span {
-  color: var(--cyan);
+  color: var(--accent);
   font-weight: 800;
 }
 
 .location-chip:hover,
 .location-chip--active {
-  border-color: rgba(98, 216, 255, 0.5);
-  background: rgba(98, 216, 255, 0.12);
+  border-color: rgba(218, 220, 222, 0.5);
+  background: rgba(218, 220, 222, 0.12);
   color: #fff;
 }
 
@@ -696,7 +698,7 @@ button {
 }
 
 .location-chip--active {
-  box-shadow: inset 0 0 0 1px rgba(242, 203, 92, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(185, 171, 132, 0.22);
 }
 
 .hud,
@@ -704,6 +706,7 @@ button {
 .control-panel,
 .pilot-overlay {
   border: 1px solid var(--panel-border);
+  border-radius: 8px;
   background: var(--panel-bg);
   color: var(--text);
   backdrop-filter: blur(16px);
@@ -722,10 +725,10 @@ button {
 }
 
 .pilot-overlay--live {
-  border-color: rgba(98, 216, 255, 0.32);
+  border-color: rgba(218, 220, 222, 0.32);
   box-shadow:
     0 20px 70px rgba(0, 0, 0, 0.38),
-    0 0 34px rgba(98, 216, 255, 0.08);
+    0 0 34px rgba(218, 220, 222, 0.08);
 }
 
 .pilot-overlay__status,
@@ -740,7 +743,7 @@ button {
 }
 
 .pilot-overlay__status {
-  color: var(--cyan);
+  color: var(--accent);
   font-size: 10px;
   font-weight: 800;
 }
@@ -774,7 +777,7 @@ button {
 .pilot-overlay__meters span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--cyan), var(--gold), var(--up));
+  background: linear-gradient(90deg, var(--accent), var(--gold), var(--up));
   transition: width 120ms ease;
 }
 
@@ -790,6 +793,7 @@ button {
   place-items: center;
   min-height: 32px;
   border: 1px solid var(--panel-border);
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.055);
   color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
@@ -807,8 +811,8 @@ button {
 
 .pilot-pad__button:hover,
 .pilot-pad__button--active {
-  border-color: rgba(98, 216, 255, 0.58);
-  background: rgba(98, 216, 255, 0.18);
+  border-color: rgba(218, 220, 222, 0.58);
+  background: rgba(218, 220, 222, 0.18);
   color: #fff;
 }
 
@@ -842,8 +846,9 @@ button {
   z-index: 18;
   width: min(520px, calc(100vw - 790px));
   min-width: 390px;
-  border: 1px solid rgba(242, 203, 92, 0.24);
-  background: rgba(5, 8, 12, 0.78);
+  border: 1px solid rgba(185, 171, 132, 0.24);
+  border-radius: 8px;
+  background: rgba(14, 15, 17, 0.8);
   padding: 11px 12px 10px;
   color: var(--text);
   transform: translateX(-50%);
@@ -883,6 +888,7 @@ button {
   width: 24px;
   height: 24px;
   border: 1px solid var(--panel-border);
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.05);
   color: var(--muted);
   cursor: pointer;
@@ -905,7 +911,7 @@ button {
 .showcase-overlay__meter span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--cyan), var(--up));
+  background: linear-gradient(90deg, var(--gold), var(--accent), var(--up));
   transition: width 380ms ease;
 }
 
@@ -935,14 +941,14 @@ button {
 
 .hud__dot--live {
   background: var(--up);
-  box-shadow: 0 0 14px rgba(56, 232, 139, 0.72);
+  box-shadow: 0 0 14px rgba(143, 191, 158, 0.72);
 }
 
 .hud__status-pill {
   margin-left: auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 2px 6px;
-  color: var(--cyan);
+  color: var(--accent);
   font-size: 10px;
 }
 
@@ -980,6 +986,7 @@ button {
 
 .hud__runtime span {
   border: 1px solid var(--panel-border);
+  border-radius: 5px;
   min-width: 38px;
   padding: 5px 6px;
   color: var(--muted);
@@ -1037,7 +1044,8 @@ button {
   width: 28px;
   height: 28px;
   border: 1px solid var(--panel-border);
-  color: var(--cyan);
+  border-radius: 6px;
+  color: var(--accent);
 }
 
 .data-row__icon--up,
@@ -1138,7 +1146,7 @@ button {
 }
 
 .world-log__entry--data {
-  border-left-color: var(--cyan);
+  border-left-color: var(--accent);
 }
 
 .world-log__entry--error {
@@ -1168,6 +1176,7 @@ button {
   gap: 7px;
   min-height: 38px;
   border: 1px solid var(--panel-border);
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.055);
   padding: 8px 9px;
   color: rgba(255, 255, 255, 0.78);
@@ -1184,8 +1193,8 @@ button {
 
 .control-button:hover:not(:disabled),
 .control-button--active {
-  border-color: rgba(98, 216, 255, 0.55);
-  background: rgba(98, 216, 255, 0.13);
+  border-color: rgba(218, 220, 222, 0.55);
+  background: rgba(218, 220, 222, 0.13);
   color: #fff;
 }
 
@@ -1232,6 +1241,7 @@ button {
 .custom-field textarea {
   width: 100%;
   border: 1px solid var(--panel-border);
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.055);
   color: #fff;
   font: inherit;
@@ -1256,11 +1266,11 @@ button {
 .custom-field input[type='range'] {
   min-height: 32px;
   padding: 0;
-  accent-color: var(--cyan);
+  accent-color: var(--accent);
 }
 
 .custom-field select option {
-  background: #080b10;
+  background: #111214;
   color: #fff;
 }
 
@@ -1271,9 +1281,9 @@ button {
   min-height: 100svh;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 42%, rgba(98, 216, 255, 0.08), transparent 32%),
+    radial-gradient(circle at 50% 42%, rgba(218, 220, 222, 0.08), transparent 32%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 44%),
-    #030406;
+    #070708;
   color: var(--text);
   text-align: center;
   isolation: isolate;
@@ -1305,8 +1315,8 @@ button {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(98, 216, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(98, 216, 255, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(218, 220, 222, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(218, 220, 222, 0.06) 1px, transparent 1px);
   background-position: center;
   background-size: 44px 44px;
   mask-image: linear-gradient(transparent 0, #000 25% 75%, transparent 100%);
@@ -1335,7 +1345,7 @@ button {
   border: 1px solid rgba(255, 91, 95, 0.3);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 36%),
-    rgba(5, 8, 12, 0.78);
+    rgba(14, 15, 17, 0.8);
   padding: 28px;
   backdrop-filter: blur(20px);
   box-shadow:
@@ -1382,12 +1392,12 @@ button {
   height: 42px;
   margin: 0 auto 14px;
   border: 1px solid var(--panel-border-strong);
-  color: var(--cyan);
+  color: var(--accent);
 }
 
 .boot-screen__eyebrow {
   margin: 0 0 6px;
-  color: var(--cyan);
+  color: var(--accent);
   font-family: var(--mono);
   font-size: 10px;
   font-weight: 800;
@@ -1455,10 +1465,10 @@ button {
 @keyframes locationPin {
   0%,
   100% {
-    box-shadow: 0 0 18px rgba(242, 203, 92, 0.9);
+    box-shadow: 0 0 18px rgba(185, 171, 132, 0.9);
   }
   50% {
-    box-shadow: 0 0 26px rgba(242, 203, 92, 0.55);
+    box-shadow: 0 0 26px rgba(185, 171, 132, 0.55);
   }
 }
 
@@ -1513,7 +1523,7 @@ button {
   body {
     overflow-x: hidden;
     overflow-y: auto;
-    background: #030406;
+    background: #070708;
   }
 
   .app-shell {
@@ -1529,12 +1539,12 @@ button {
     width: 100vw;
     height: var(--mobile-stage-height);
     min-height: 0;
-    border-bottom: 1px solid rgba(98, 216, 255, 0.16);
+    border-bottom: 1px solid rgba(218, 220, 222, 0.16);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.38);
   }
 
   .world-video {
-    background: #020304;
+    background: #050506;
     object-fit: contain;
     object-position: center;
   }
