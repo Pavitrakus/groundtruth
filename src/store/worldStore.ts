@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { createRandomSession } from '../engine/sessionRandom';
 import type { FrameModeId, LocationId, ViewModeId } from '../engine/worldOptions';
 
 export type NewsSentiment = 'positive' | 'neutral' | 'negative' | 'crisis';
@@ -66,6 +67,7 @@ export interface WorldState {
   reactorModel: ReactorModel;
   reactorError: string | null;
   selectedLocationId: LocationId;
+  sessionSeed: number;
   showcaseActive: boolean;
   showcaseCue: ShowcaseCue | null;
   showcaseStep: number;
@@ -102,19 +104,21 @@ export interface WorldState {
 
 export type WorldStateSnapshot = WorldState;
 
+const initialSession = createRandomSession();
+
 export const useWorldStore = create<WorldState>((set) => ({
   connectionStatus: 'disconnected',
-  currentPrompt: '',
+  currentPrompt: initialSession.currentPrompt,
   currentChunk: 0,
   currentFrame: 0,
   audioEnabled: false,
   audioVolume: 0.72,
-  dataMode: 'live',
-  dataSnapshot: null,
-  frameMode: 'world',
+  dataMode: initialSession.dataMode,
+  dataSnapshot: initialSession.dataSnapshot,
+  frameMode: initialSession.frameMode,
   isConnected: false,
   isGenerating: false,
-  lastReason: 'Waiting for the first data pulse',
+  lastReason: initialSession.lastReason,
   pilotBoost: false,
   pilotLookHorizontal: 'idle',
   pilotLookVertical: 'idle',
@@ -122,13 +126,14 @@ export const useWorldStore = create<WorldState>((set) => ({
   pilotSpeed: 10,
   reactorModel: 'helios',
   reactorError: null,
-  selectedLocationId: 'bangalore',
+  selectedLocationId: initialSession.selectedLocationId,
+  sessionSeed: initialSession.sessionSeed,
   showcaseActive: false,
   showcaseCue: null,
   showcaseStep: 0,
-  viewMode: 'cinematic',
-  worldLog: [],
-  worldMood: 'dawn',
+  viewMode: initialSession.viewMode,
+  worldLog: initialSession.worldLog,
+  worldMood: initialSession.worldMood,
   addLog: (event, prompt, source = 'data') =>
     set((state) => ({
       worldLog: [

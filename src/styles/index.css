@@ -164,6 +164,103 @@ button {
   animation: dreamFloat 9s ease-in-out infinite alternate;
 }
 
+.synthetic-world::before,
+.synthetic-world::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  content: '';
+  transition:
+    background 700ms ease,
+    opacity 700ms ease,
+    transform 900ms ease;
+}
+
+.synthetic-world::before {
+  opacity: 0.62;
+  mix-blend-mode: screen;
+}
+
+.synthetic-world::after {
+  opacity: 0.34;
+  mix-blend-mode: overlay;
+}
+
+.world-stage--loc-bangalore .synthetic-world::before {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 58px, rgba(98, 216, 255, 0.16) 59px 62px, transparent 63px 116px),
+    linear-gradient(120deg, transparent 0 54%, rgba(56, 232, 139, 0.2) 55% 57%, transparent 58%);
+}
+
+.world-stage--loc-new-york .synthetic-world::before {
+  background:
+    linear-gradient(90deg, transparent 0 6%, rgba(255, 255, 255, 0.08) 6% 7%, transparent 7% 11%) 0 38% / 115px 36% repeat-x,
+    linear-gradient(180deg, transparent 0 48%, rgba(98, 216, 255, 0.18) 49% 50%, transparent 51%);
+}
+
+.world-stage--loc-tokyo .synthetic-world::before {
+  background:
+    linear-gradient(124deg, transparent 0 45%, rgba(255, 91, 95, 0.2) 46% 47%, transparent 48%),
+    linear-gradient(58deg, transparent 0 52%, rgba(98, 216, 255, 0.24) 53% 54%, transparent 55%),
+    repeating-linear-gradient(90deg, transparent 0 78px, rgba(242, 203, 92, 0.14) 79px 81px, transparent 82px 156px);
+}
+
+.world-stage--loc-dubai .synthetic-world::before {
+  background:
+    linear-gradient(104deg, transparent 0 49%, rgba(242, 203, 92, 0.24) 50% 51%, transparent 52%),
+    repeating-linear-gradient(90deg, transparent 0 92px, rgba(255, 255, 255, 0.1) 93px 95px, transparent 96px 184px);
+}
+
+.world-stage--loc-london .synthetic-world::after {
+  background:
+    linear-gradient(180deg, rgba(215, 224, 230, 0.12), transparent 36%),
+    repeating-linear-gradient(0deg, transparent 0 28px, rgba(215, 224, 230, 0.08) 29px 30px, transparent 31px 58px);
+  opacity: 0.5;
+}
+
+.world-stage--loc-iceland .synthetic-world::before {
+  background:
+    linear-gradient(106deg, transparent 0 28%, rgba(56, 232, 139, 0.25) 29% 31%, transparent 32% 58%, rgba(98, 216, 255, 0.18) 59% 61%, transparent 62%),
+    linear-gradient(180deg, transparent 0 60%, rgba(255, 255, 255, 0.14) 61% 62%, transparent 63%);
+}
+
+.world-stage--loc-amazon .synthetic-world::before {
+  background:
+    linear-gradient(22deg, transparent 0 50%, rgba(56, 232, 139, 0.24) 51% 54%, transparent 55%),
+    repeating-linear-gradient(110deg, rgba(56, 232, 139, 0.09) 0 16px, transparent 17px 44px);
+}
+
+.world-stage--loc-sahara .synthetic-world__sky {
+  background:
+    radial-gradient(circle at 68% 20%, rgba(242, 203, 92, 0.5), transparent 22%),
+    linear-gradient(180deg, rgba(112, 86, 45, 0.82), rgba(25, 20, 14, 1));
+}
+
+.world-stage--loc-sahara .synthetic-world::before {
+  background:
+    repeating-linear-gradient(168deg, transparent 0 78px, rgba(242, 203, 92, 0.16) 79px 86px, transparent 87px 160px),
+    linear-gradient(180deg, transparent 0 55%, rgba(242, 203, 92, 0.12) 56%, transparent 68%);
+}
+
+.world-stage--loc-singapore .synthetic-world::before {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 74px, rgba(56, 232, 139, 0.16) 75px 78px, transparent 79px 148px),
+    linear-gradient(145deg, transparent 0 42%, rgba(98, 216, 255, 0.2) 43% 45%, transparent 46%);
+}
+
+.world-stage--loc-alps .synthetic-world__terrain {
+  background:
+    linear-gradient(160deg, rgba(233, 246, 255, 0.32), transparent 34%),
+    linear-gradient(28deg, rgba(4, 7, 10, 0.95) 0 30%, rgba(50, 60, 68, 0.96) 31% 58%, rgba(221, 236, 246, 0.18) 59% 63%, rgba(6, 9, 14, 0.98) 64%);
+}
+
+.world-stage--loc-alps .synthetic-world::before {
+  background:
+    linear-gradient(132deg, transparent 0 39%, rgba(255, 255, 255, 0.28) 40% 42%, transparent 43%),
+    linear-gradient(48deg, transparent 0 55%, rgba(98, 216, 255, 0.16) 56% 57%, transparent 58%);
+}
+
 .world-stage--fire .synthetic-world__sky {
   background:
     radial-gradient(circle at 70% 30%, rgba(255, 78, 34, 0.42), transparent 22%),
@@ -405,10 +502,12 @@ button {
   z-index: 45;
   width: 344px;
   border: 1px solid var(--panel-border-strong);
+  border-radius: 8px;
   background: rgba(5, 8, 12, 0.92);
   padding: 12px;
   backdrop-filter: blur(18px);
   box-shadow: 0 22px 80px rgba(0, 0, 0, 0.42);
+  animation: panelEnter 180ms ease-out;
 }
 
 .location-popover__head {
@@ -438,6 +537,23 @@ button {
     0 0 44px rgba(98, 216, 255, 0.12);
 }
 
+.mini-globe::before,
+.mini-globe::after {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(98, 216, 255, 0.16);
+  border-radius: 50%;
+  content: '';
+}
+
+.mini-globe::before {
+  transform: rotateX(62deg);
+}
+
+.mini-globe::after {
+  transform: rotateY(64deg);
+}
+
 .mini-globe__grid {
   position: absolute;
   inset: 0;
@@ -459,6 +575,7 @@ button {
   padding: 0;
   transform: translate(-50%, -50%);
   cursor: pointer;
+  transition: transform 160ms ease;
 }
 
 .mini-globe__pin span {
@@ -468,6 +585,15 @@ button {
   border-radius: 50%;
   background: var(--cyan);
   box-shadow: 0 0 12px rgba(98, 216, 255, 0.82);
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    width 160ms ease,
+    height 160ms ease;
+}
+
+.mini-globe__pin:hover {
+  transform: translate(-50%, -50%) scale(1.35);
 }
 
 .mini-globe__pin--active span {
@@ -475,6 +601,7 @@ button {
   height: 10px;
   background: var(--gold);
   box-shadow: 0 0 18px rgba(242, 203, 92, 0.9);
+  animation: locationPin 1.4s ease-in-out infinite;
 }
 
 .location-grid {
@@ -488,6 +615,7 @@ button {
   align-items: center;
   gap: 7px;
   border: 1px solid var(--panel-border);
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.045);
   padding: 7px 8px;
   color: rgba(255, 255, 255, 0.76);
@@ -495,6 +623,11 @@ button {
   font-family: var(--mono);
   font-size: 10px;
   text-align: left;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
 }
 
 .location-chip span {
@@ -507,6 +640,14 @@ button {
   border-color: rgba(98, 216, 255, 0.5);
   background: rgba(98, 216, 255, 0.12);
   color: #fff;
+}
+
+.location-chip:hover {
+  transform: translateY(-1px);
+}
+
+.location-chip--active {
+  box-shadow: inset 0 0 0 1px rgba(242, 203, 92, 0.22);
 }
 
 .hud,
@@ -1468,6 +1609,27 @@ button {
   }
   50% {
     opacity: 0.4;
+  }
+}
+
+@keyframes panelEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes locationPin {
+  0%,
+  100% {
+    box-shadow: 0 0 18px rgba(242, 203, 92, 0.9);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(242, 203, 92, 0.55);
   }
 }
 

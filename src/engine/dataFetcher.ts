@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { DataMode, DataSnapshot, NewsSentiment } from '../store/worldStore';
-import { getLocationPreset, type LocationPreset } from './worldOptions';
+import { getLocationPreset, type LocationId, type LocationPreset } from './worldOptions';
 
 export type DemoDataMode = Exclude<DataMode, 'live' | 'custom'>;
 
@@ -51,6 +51,42 @@ const NEGATIVE_TERMS = [
   'crisis',
   'selloff',
 ];
+
+const DEMO_ASSETS = [
+  { name: 'Bitcoin', price: 71000, symbol: 'BTC' },
+  { name: 'Ethereum', price: 3600, symbol: 'ETH' },
+  { name: 'Solana', price: 182, symbol: 'SOL' },
+  { name: 'Nvidia', price: 128, symbol: 'NVDA' },
+  { name: 'S&P 500', price: 6100, symbol: 'SPY' },
+] as const;
+
+const HEADLINE_VARIANTS: Record<DemoDataMode, string[]> = {
+  bull: [
+    'Risk appetite returns as digital assets push toward new highs',
+    'Momentum buyers lift the tape as liquidity turns electric',
+    'Optimism ripples through cross-asset flows after a clean breakout',
+  ],
+  circuit: [
+    'Liquidity vanishes as panic overwhelms the tape',
+    'Trading desks brace as volatility trips emergency thresholds',
+    'System pressure spikes as risk models move into lockdown',
+  ],
+  crash: [
+    'Circuit breakers flash as global risk assets enter freefall',
+    'A risk-off wave hits portfolios before the opening bell',
+    'Forced selling turns market stress into a global pressure front',
+  ],
+  open: [
+    'Markets open steady as traders wait for the next signal',
+    'The opening bell lands quietly while hidden volatility builds',
+    'Fresh liquidity enters the session with a cautious pulse',
+  ],
+  storm: [
+    'Severe weather and nervous markets collide across live feeds',
+    'Macro pressure and storm systems converge into one signal',
+    'Climate alerts and market stress redraw the risk map',
+  ],
+};
 
 export async function fetchCrypto(): Promise<CryptoTick> {
   const response = await axios.get(`${COINGECKO}/simple/price`, {
@@ -175,7 +211,7 @@ export async function pollAllData(
       lastUpdated: Date.now(),
     };
   } catch {
-    return buildFallbackSnapshot();
+    return buildFallbackSnapshot(location);
   }
 }
 
@@ -283,35 +319,153 @@ export function buildDemoSnapshot(
     },
   };
 
-  return scenarios[mode];
+  return randomizeDemoSnapshot(scenarios[mode], mode, location);
 }
 
-function buildFallbackSnapshot(): DataSnapshot {
+export function retargetSnapshotToLocation(
+  snapshot: DataSnapshot,
+  mode: DataMode,
+  location: LocationPreset,
+): DataSnapshot {
+  if (mode !== 'live' && mode !== 'custom') {
+    return buildDemoSnapshot(mode, location);
+  }
+
+  const weather = buildLocationWeather(location);
+  const volatilityIndex = clamp(
+    snapshot.volatilityIndex + randomBetween(-6, 8) + Math.abs(weather.windSpeed - snapshot.windSpeed) * 0.16,
+    0,
+    100,
+  );
+  const systemPressure = clamp(volatilityIndex * 0.5 + weather.windSpeed * 0.45, 0, 100);
+
+  return {
+    ...snapshot,
+    ...weather,
+    lastUpdated: Date.now(),
+    newsHeadline:
+      snapshot.dataSource === 'custom'
+        ? snapshot.newsHeadline
+        : `${location.label} signal: ${snapshot.newsHeadline}`,
+    systemPressure,
+    volatilityIndex,
+  };
+}
+
+function buildFallbackSnapshot(location: LocationPreset): DataSnapshot {
   const hourWave = Math.sin(Date.now() / 1000 / 60);
-  const btcChange = hourWave * 3.2;
-  const ethChange = Math.cos(Date.now() / 1000 / 52) * 4.1;
-  const newsPulse = clamp(52 + hourWave * 25, 0, 100);
+  const weather = buildLocationWeather(location);
+  const btcChange = hourWave * 3.2 + randomBetween(-1.4, 1.4);
+  const ethChange = Math.cos(Date.now() / 1000 / 52) * 4.1 + randomBetween(-1.2, 1.2);
+  const newsPulse = clamp(52 + hourWave * 25 + randomBetween(-8, 8), 0, 100);
   const volatilityIndex = deriveVolatility(btcChange, ethChange);
 
   return {
     assetName: 'Bitcoin',
     assetSymbol: 'BTC',
-    btcPrice: 69000 + hourWave * 1200,
+    btcPrice: 69000 + hourWave * 1200 + randomBetween(-900, 900),
     btcChange24h: btcChange,
-    ethPrice: 3400 + Math.cos(Date.now() / 1000 / 40) * 160,
+    ethPrice: 3400 + Math.cos(Date.now() / 1000 / 40) * 160 + randomBetween(-80, 80),
     ethChange24h: ethChange,
     fearGreedScore: deriveFearGreed(btcChange, ethChange, newsPulse),
-    weatherCode: hourWave > 0.55 ? 61 : 2,
-    weatherTemp: 25 + hourWave * 3,
-    windSpeed: 18 + Math.abs(hourWave) * 18,
+    ...weather,
     newsSentiment: sentimentFromScore(newsPulse),
-    newsHeadline: 'Fallback pulse active; synthetic signal preserving the demo loop',
+    newsHeadline: `${location.label} fallback pulse active; synthetic signal preserving the demo loop`,
     newsPulse,
     volatilityIndex,
     systemPressure: measureSystemPressure(volatilityIndex),
     dataSource: 'fallback',
     lastUpdated: Date.now(),
   };
+}
+
+function randomizeDemoSnapshot(
+  snapshot: DataSnapshot,
+  mode: DemoDataMode,
+  location: LocationPreset,
+): DataSnapshot {
+  const asset = pick(DEMO_ASSETS);
+  const weather = buildLocationWeather(location, snapshot.weatherCode);
+  const btcChange24h = jitterSigned(snapshot.btcChange24h, mode === 'open' ? 1.8 : 2.6);
+  const ethChange24h = jitterSigned(snapshot.ethChange24h, mode === 'open' ? 1.5 : 2.8);
+  const volatilityIndex = clamp(jitter(snapshot.volatilityIndex, mode === 'circuit' ? 4 : 10), 0, 100);
+  const newsPulse = clamp(jitter(snapshot.newsPulse, mode === 'circuit' ? 4 : 11), 0, 100);
+  const fearGreedScore = clamp(jitter(snapshot.fearGreedScore, mode === 'circuit' ? 3 : 8), 0, 100);
+  const priceMultiplier = randomBetween(0.94, 1.08);
+  const locationPulse = location.shortLabel.charCodeAt(0) + location.shortLabel.charCodeAt(location.shortLabel.length - 1);
+
+  return {
+    ...snapshot,
+    ...weather,
+    assetName: asset.name,
+    assetSymbol: asset.symbol,
+    btcChange24h,
+    btcPrice: Math.max(1, asset.price * priceMultiplier + locationPulse),
+    ethChange24h,
+    ethPrice: Math.max(1, snapshot.ethPrice * randomBetween(0.92, 1.11)),
+    fearGreedScore,
+    lastUpdated: Date.now(),
+    newsHeadline: pick(HEADLINE_VARIANTS[mode]),
+    newsPulse,
+    systemPressure: clamp(volatilityIndex * 0.58 + weather.windSpeed * 0.46, 0, 100),
+    volatilityIndex,
+  };
+}
+
+function buildLocationWeather(
+  location: LocationPreset,
+  preferredCode?: number,
+): Pick<DataSnapshot, 'weatherCode' | 'weatherTemp' | 'windSpeed'> {
+  const weatherCodes: Record<LocationId, number[]> = {
+    alps: [71, 73, 85, 2],
+    amazon: [61, 80, 95, 51],
+    bangalore: [61, 51, 2, 95],
+    dubai: [0, 1, 2, 45],
+    iceland: [71, 45, 61, 2],
+    london: [45, 51, 61, 2],
+    'new-york': [0, 2, 61, 95],
+    sahara: [0, 1, 45, 2],
+    singapore: [61, 80, 95, 2],
+    tokyo: [1, 2, 61, 51],
+  };
+  const code = Math.random() > 0.28 && preferredCode !== undefined ? preferredCode : pick(weatherCodes[location.id]);
+  const latitudeHeat = Math.max(-10, Math.min(10, (18 - Math.abs(location.latitude)) * 0.24));
+  const locationBase: Record<LocationId, number> = {
+    alps: -1,
+    amazon: 28,
+    bangalore: 25,
+    dubai: 34,
+    iceland: 4,
+    london: 12,
+    'new-york': 17,
+    sahara: 36,
+    singapore: 29,
+    tokyo: 20,
+  };
+
+  return {
+    weatherCode: code,
+    weatherTemp: locationBase[location.id] + latitudeHeat + randomBetween(-3.2, 3.2),
+    windSpeed: Math.max(2, randomBetween(6, 30) + (code >= 95 ? 34 : 0) + (code === 45 ? -3 : 0)),
+  };
+}
+
+function pick<T>(items: readonly T[]): T {
+  return items[Math.floor(Math.random() * items.length)]!;
+}
+
+function jitter(value: number, amount: number): number {
+  return value + randomBetween(-amount, amount);
+}
+
+function jitterSigned(value: number, amount: number): number {
+  const next = jitter(value, amount);
+  if (Math.abs(value) < 2.2) return next;
+  return Math.sign(value) * Math.max(Math.abs(next), Math.min(Math.abs(value) * 0.55, 2.4));
+}
+
+function randomBetween(min: number, max: number): number {
+  return min + Math.random() * (max - min);
 }
 
 function sentimentFromScore(score: number): NewsSentiment {

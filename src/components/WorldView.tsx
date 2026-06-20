@@ -7,11 +7,14 @@ export function WorldView() {
   const worldMood = useWorldStore((state) => state.worldMood);
   const isConnected = useWorldStore((state) => state.isConnected);
   const reactorModel = useWorldStore((state) => state.reactorModel);
+  const selectedLocationId = useWorldStore((state) => state.selectedLocationId);
   const modelLabel = reactorModel === 'lingbot' ? 'LingBot' : 'Helios';
   const fitVideoToPhone = usePhoneVideoFit();
 
   return (
-    <div className={`world-stage world-stage--${worldMood} world-stage--frame-${frameMode}`}>
+    <div
+      className={`world-stage world-stage--${worldMood} world-stage--frame-${frameMode} world-stage--loc-${selectedLocationId}`}
+    >
       <div className="synthetic-world" aria-hidden="true">
         <div className="synthetic-world__sky" />
         <div className="synthetic-world__horizon" />

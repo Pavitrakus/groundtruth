@@ -18,7 +18,8 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { dataToWorldPrompt, getOpeningPrompt } from '../engine/promptEngine';
+import { buildDemoSnapshot, retargetSnapshotToLocation } from '../engine/dataFetcher';
+import { dataToWorldPrompt } from '../engine/promptEngine';
 import {
   FRAME_MODES,
   getFrameMode,
@@ -77,32 +78,32 @@ export function WorldCommandBar() {
   const [locationOpen, setLocationOpen] = useState(false);
   const activeLocation = getLocationPreset(selectedLocationId);
 
-  async function pushDirectorPrompt(event: string) {
+  async function pushDirectorPrompt(
+    event: string,
+    overrides: { frameMode?: FrameModeId; locationId?: LocationId; viewMode?: ViewModeId } = {},
+  ) {
     const store = useWorldStore.getState();
     const controls = {
-      frame: getFrameMode(store.frameMode),
-      location: getLocationPreset(store.selectedLocationId),
-      view: getViewMode(store.viewMode),
+      frame: getFrameMode(overrides.frameMode ?? store.frameMode),
+      location: getLocationPreset(overrides.locationId ?? store.selectedLocationId),
+      view: getViewMode(overrides.viewMode ?? store.viewMode),
     };
-    const result = store.dataSnapshot
-      ? dataToWorldPrompt(store.dataSnapshot, controls)
-      : {
-          mood: store.worldMood,
-          prompt: getOpeningPrompt(controls),
-          reason: `${controls.location.shortLabel} ${controls.view.label}/${controls.frame.label}: director pulse`,
-        };
+    const data = store.dataSnapshot
+      ? retargetSnapshotToLocation(store.dataSnapshot, store.dataMode, controls.location)
+      : buildDemoSnapshot('open', controls.location);
+    const result = dataToWorldPrompt(data, controls);
 
     try {
+      store.setData(data);
       store.setPrompt(result.prompt);
       store.setWorldMood(result.mood);
       store.setReason(result.reason);
+      store.addLog(event, result.prompt, 'manual');
 
       if (status === 'ready') {
         const prompt = store.reactorModel === 'lingbot' ? result.prompt.slice(0, 980) : result.prompt;
         await sendCommand('set_prompt', { prompt });
       }
-
-      store.addLog(event, result.prompt, 'manual');
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Director command failed';
       setReactorError(message);
@@ -114,7 +115,7 @@ export function WorldCommandBar() {
     const location = getLocationPreset(locationId);
     setLocation(locationId);
     setLocationOpen(false);
-    await pushDirectorPrompt(`Location set: ${location.label}`);
+    await pushDirectorPrompt(`Location set: ${location.label}`, { locationId });
   }
 
   async function chooseView(mode: ViewModeId) {
@@ -138,12 +139,12 @@ export function WorldCommandBar() {
       return;
     }
 
-    await pushDirectorPrompt(`View mode: ${getViewMode(mode).label}`);
+    await pushDirectorPrompt(`View mode: ${getViewMode(mode).label}`, { viewMode: mode });
   }
 
   async function chooseFrame(mode: FrameModeId) {
     setFrameMode(mode);
-    await pushDirectorPrompt(`Frame mode: ${getFrameMode(mode).label}`);
+    await pushDirectorPrompt(`Frame mode: ${getFrameMode(mode).label}`, { frameMode: mode });
   }
 
   function chooseModel(model: ReactorModel) {
