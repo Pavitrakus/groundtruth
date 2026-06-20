@@ -113,7 +113,7 @@ export const useWorldStore = create<WorldState>((set) => ({
   currentPrompt: initialSession.currentPrompt,
   currentChunk: 0,
   currentFrame: 0,
-  audioEnabled: false,
+  audioEnabled: true,
   audioVolume: 0.72,
   dataMode: initialSession.dataMode,
   dataSnapshot: initialSession.dataSnapshot,

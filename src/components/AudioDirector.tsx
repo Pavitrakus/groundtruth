@@ -147,6 +147,25 @@ export function AudioDirector() {
   }, [ensureRig]);
 
   useEffect(() => {
+    function armFromInteraction() {
+      if (useWorldStore.getState().audioEnabled) {
+        void ensureRig();
+      }
+    }
+
+    const options = { once: true, passive: true };
+    window.addEventListener('pointerdown', armFromInteraction, options);
+    window.addEventListener('touchstart', armFromInteraction, options);
+    window.addEventListener('keydown', armFromInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('pointerdown', armFromInteraction);
+      window.removeEventListener('touchstart', armFromInteraction);
+      window.removeEventListener('keydown', armFromInteraction);
+    };
+  }, [ensureRig]);
+
+  useEffect(() => {
     if (!audioEnabled) return;
     void ensureRig();
   }, [audioEnabled, ensureRig]);
