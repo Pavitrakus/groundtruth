@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ReactorProvider } from '@reactor-team/js-sdk';
-import { AlertTriangle, Globe2, RadioTower, Sparkles } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { AudioDirector } from './components/AudioDirector';
 import { ControlPanel } from './components/ControlPanel';
 import { DataOverlay } from './components/DataOverlay';
@@ -18,7 +18,7 @@ type TokenState =
   | { status: 'ready'; token: string; error: null }
   | { status: 'error'; token: null; error: string };
 
-const MIN_BOOT_MS = 1200;
+const MIN_BOOT_MS = 3000;
 
 export default function App() {
   const reactorModel = useWorldStore((state) => state.reactorModel);
@@ -79,37 +79,12 @@ export default function App() {
   if (tokenState.status === 'loading' || (tokenState.status === 'ready' && !bootComplete)) {
     return (
       <main className="boot-screen">
-        <div className="boot-screen__mesh" aria-hidden="true" />
-        <section className="boot-card" aria-label="Terra is loading">
-          <div className="terra-loader" aria-hidden="true">
-            <span className="terra-loader__orbit terra-loader__orbit--outer" />
-            <span className="terra-loader__orbit terra-loader__orbit--inner" />
-            <span className="terra-loader__sweep" />
-            <div className="terra-loader__planet">
-              <span className="terra-loader__continent terra-loader__continent--a" />
-              <span className="terra-loader__continent terra-loader__continent--b" />
-              <span className="terra-loader__continent terra-loader__continent--c" />
-              <Globe2 size={44} strokeWidth={1.15} />
-            </div>
-            <span className="terra-loader__satellite terra-loader__satellite--a">
-              <Sparkles size={13} />
-            </span>
-            <span className="terra-loader__satellite terra-loader__satellite--b">
-              <RadioTower size={13} />
-            </span>
-          </div>
-          <p className="boot-screen__eyebrow">LIVE WORLD ENGINE</p>
+        <section className="boot-card boot-card--minimal" aria-label="Terra is loading">
           <p className="boot-screen__label">TERRA</p>
-          <p className="boot-screen__copy">Minting a live Reactor session</p>
-          <div className="boot-screen__bar" aria-hidden="true">
+          <div className="terra-loader" aria-hidden="true">
             <span />
           </div>
-          <div className="boot-screen__steps" aria-hidden="true">
-            <span>MARKET</span>
-            <span>WEATHER</span>
-            <span>NEWS</span>
-            <span>REACTOR</span>
-          </div>
+          <p className="boot-screen__copy">Preparing live world</p>
         </section>
       </main>
     );
