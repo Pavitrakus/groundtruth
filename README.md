@@ -14,6 +14,7 @@ GroundTruth turns live market, weather, news, and local system signals into real
 - Frame modes: `World`, `Card`, `Map`, `Signal`, and `Dream`.
 - Judge Run: a five-beat autoplay pitch sequence with cinematic captions and live prompt changes.
 - Custom signal composer: enter a ticker, event, market move, fear level, weather, and world behavior.
+- Soundscape: generated ambient audio, event stingers, and LingBot drone-engine feedback.
 - World events now live in the right-side rail on desktop so they do not cover the main HUD.
 
 ## Drone Controls
@@ -26,6 +27,8 @@ Switching to `Drone` automatically reboots the session into `LingBot`.
 - `R`/`F`: look up/down.
 - `Shift`: faster rotation.
 - `Space`: stop and idle.
+
+Use the on-screen pilot pad for touch or mouse control. Enable `Sound` in the top bar to hear drone-engine feedback tied to movement.
 
 ## Run
 

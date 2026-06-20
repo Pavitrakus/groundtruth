@@ -393,6 +393,11 @@ button {
   color: #fff;
 }
 
+.tool-button--sound {
+  min-width: 76px;
+  border-color: rgba(98, 216, 255, 0.28);
+}
+
 .location-popover {
   position: fixed;
   top: 66px;
@@ -520,8 +525,8 @@ button {
   left: 50%;
   bottom: 18px;
   z-index: 16;
-  width: min(430px, calc(100vw - 380px));
-  min-width: 330px;
+  width: min(470px, calc(100vw - 380px));
+  min-width: 360px;
   padding: 11px 12px;
   transform: translateX(-50%);
 }
@@ -567,6 +572,64 @@ button {
 
 .pilot-overlay__state span:last-child {
   color: var(--gold);
+}
+
+.pilot-overlay__meters {
+  height: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.pilot-overlay__meters span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--gold), var(--up));
+  transition: width 120ms ease;
+}
+
+.pilot-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.pilot-pad__button {
+  display: grid;
+  place-items: center;
+  min-height: 32px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  touch-action: none;
+  user-select: none;
+  transition:
+    border-color 90ms ease,
+    background 90ms ease,
+    color 90ms ease,
+    transform 90ms ease;
+}
+
+.pilot-pad__button:hover,
+.pilot-pad__button--active {
+  border-color: rgba(98, 216, 255, 0.58);
+  background: rgba(98, 216, 255, 0.18);
+  color: #fff;
+}
+
+.pilot-pad__button:active,
+.pilot-pad__button--active {
+  transform: translateY(1px);
+}
+
+.pilot-pad__button--stop {
+  border-color: rgba(255, 91, 95, 0.32);
+  color: #ffb4b6;
 }
 
 .pilot-overlay__keys {

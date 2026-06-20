@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ReactorProvider } from '@reactor-team/js-sdk';
 import { Activity, AlertTriangle } from 'lucide-react';
+import { AudioDirector } from './components/AudioDirector';
 import { ControlPanel } from './components/ControlPanel';
 import { DataOverlay } from './components/DataOverlay';
 import { WorldLog } from './components/WorldLog';
@@ -98,6 +99,7 @@ export default function App() {
     >
       <main className="app-shell">
         <WorldView />
+        <AudioDirector />
         <WorldOrchestrator />
         <ShowcaseDirector />
         <PilotOverlay />

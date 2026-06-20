@@ -15,6 +15,8 @@ import {
   RadioTower,
   Sparkles,
   Square,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { dataToWorldPrompt, getOpeningPrompt } from '../engine/promptEngine';
 import {
@@ -57,8 +59,10 @@ export function WorldCommandBar() {
   }));
   const {
     frameMode,
+    audioEnabled,
     reactorModel,
     selectedLocationId,
+    setAudioEnabled,
     setFrameMode,
     setLocation,
     setReactorModel,
@@ -186,6 +190,21 @@ export function WorldCommandBar() {
       .addLog('Judge run armed', 'A five-beat GroundTruth pitch sequence is starting.', 'system');
   }
 
+  function toggleAudio() {
+    const nextEnabled = !audioEnabled;
+    window.dispatchEvent(new CustomEvent('groundtruth:audio-arm'));
+    setAudioEnabled(nextEnabled);
+    useWorldStore
+      .getState()
+      .addLog(
+        nextEnabled ? 'Soundscape online' : 'Soundscape muted',
+        nextEnabled
+          ? 'Adaptive ambience, data stingers, and drone engine audio are active.'
+          : 'Audio director is muted.',
+        'system',
+      );
+  }
+
   return (
     <>
       <header className="command-bar" aria-label="World controls">
@@ -272,6 +291,16 @@ export function WorldCommandBar() {
         >
           {status === 'ready' ? <Sparkles size={15} /> : <Navigation size={15} />}
           Pulse
+        </button>
+
+        <button
+          className={`tool-button tool-button--sound ${audioEnabled ? 'tool-button--active' : ''}`}
+          onClick={toggleAudio}
+          title={audioEnabled ? 'Mute soundscape' : 'Start soundscape'}
+          type="button"
+        >
+          {audioEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
+          Sound
         </button>
 
         <button

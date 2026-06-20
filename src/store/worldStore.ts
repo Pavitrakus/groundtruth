@@ -50,15 +50,19 @@ export interface WorldState {
   currentPrompt: string;
   currentChunk: number;
   currentFrame: number;
+  audioEnabled: boolean;
+  audioVolume: number;
   dataMode: DataMode;
   dataSnapshot: DataSnapshot | null;
   frameMode: FrameModeId;
   isConnected: boolean;
   isGenerating: boolean;
   lastReason: string;
+  pilotBoost: boolean;
   pilotLookHorizontal: PilotLookHorizontal;
   pilotLookVertical: PilotLookVertical;
   pilotMovement: PilotMovement;
+  pilotSpeed: number;
   reactorModel: ReactorModel;
   reactorError: string | null;
   selectedLocationId: LocationId;
@@ -69,6 +73,8 @@ export interface WorldState {
   worldLog: WorldLogEntry[];
   worldMood: WorldMood;
   addLog: (event: string, prompt: string, source?: WorldLogEntry['source']) => void;
+  setAudioEnabled: (enabled: boolean) => void;
+  setAudioVolume: (volume: number) => void;
   setConnectionStatus: (status: string) => void;
   setData: (data: DataSnapshot) => void;
   setDataMode: (mode: DataMode) => void;
@@ -79,6 +85,8 @@ export interface WorldState {
     movement: PilotMovement,
     lookHorizontal: PilotLookHorizontal,
     lookVertical: PilotLookVertical,
+    boost?: boolean,
+    speed?: number,
   ) => void;
   setPrompt: (prompt: string) => void;
   setReactorModel: (model: ReactorModel) => void;
@@ -99,15 +107,19 @@ export const useWorldStore = create<WorldState>((set) => ({
   currentPrompt: '',
   currentChunk: 0,
   currentFrame: 0,
+  audioEnabled: false,
+  audioVolume: 0.72,
   dataMode: 'live',
   dataSnapshot: null,
   frameMode: 'world',
   isConnected: false,
   isGenerating: false,
   lastReason: 'Waiting for the first data pulse',
+  pilotBoost: false,
   pilotLookHorizontal: 'idle',
   pilotLookVertical: 'idle',
   pilotMovement: 'idle',
+  pilotSpeed: 10,
   reactorModel: 'helios',
   reactorError: null,
   selectedLocationId: 'bangalore',
@@ -133,6 +145,8 @@ export const useWorldStore = create<WorldState>((set) => ({
         ...state.worldLog.slice(0, 17),
       ],
     })),
+  setAudioEnabled: (audioEnabled) => set({ audioEnabled }),
+  setAudioVolume: (audioVolume) => set({ audioVolume }),
   setConnectionStatus: (connectionStatus) =>
     set({
       connectionStatus,
@@ -143,8 +157,8 @@ export const useWorldStore = create<WorldState>((set) => ({
   setFrameMode: (frameMode) => set({ frameMode }),
   setGenerating: (isGenerating) => set({ isGenerating }),
   setLocation: (selectedLocationId) => set({ selectedLocationId }),
-  setPilot: (pilotMovement, pilotLookHorizontal, pilotLookVertical) =>
-    set({ pilotMovement, pilotLookHorizontal, pilotLookVertical }),
+  setPilot: (pilotMovement, pilotLookHorizontal, pilotLookVertical, pilotBoost = false, pilotSpeed = 10) =>
+    set({ pilotBoost, pilotLookHorizontal, pilotLookVertical, pilotMovement, pilotSpeed }),
   setPrompt: (currentPrompt) => set({ currentPrompt }),
   setReactorModel: (reactorModel) =>
     set({
@@ -153,9 +167,11 @@ export const useWorldStore = create<WorldState>((set) => ({
       currentFrame: 0,
       isConnected: false,
       isGenerating: false,
+      pilotBoost: false,
       pilotLookHorizontal: 'idle',
       pilotLookVertical: 'idle',
       pilotMovement: 'idle',
+      pilotSpeed: 10,
       reactorError: null,
       reactorModel,
     }),

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, type PointerEvent, type ReactNode } from 'react';
 import { useReactor } from '@reactor-team/js-sdk';
-import { Gauge, Keyboard, Move3D } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Gauge, Keyboard, Move3D, Square } from 'lucide-react';
 import type {
   PilotLookHorizontal,
   PilotLookVertical,
@@ -16,8 +16,15 @@ export function PilotOverlay() {
     sendCommand: state.sendCommand,
     status: state.status,
   }));
-  const { pilotLookHorizontal, pilotLookVertical, pilotMovement, reactorModel, viewMode } =
-    useWorldStore();
+  const {
+    pilotBoost,
+    pilotLookHorizontal,
+    pilotLookVertical,
+    pilotMovement,
+    pilotSpeed,
+    reactorModel,
+    viewMode,
+  } = useWorldStore();
   const pressed = useRef<Set<string>>(new Set());
   const lastSent = useRef({
     lookHorizontal: 'idle' as PilotLookHorizontal,
@@ -28,11 +35,13 @@ export function PilotOverlay() {
   const isPilotMode = reactorModel === 'lingbot' && viewMode === 'drone';
 
   const syncPilot = useCallback(async () => {
-    if (status !== 'ready' || useWorldStore.getState().reactorModel !== 'lingbot') return;
+    if (useWorldStore.getState().reactorModel !== 'lingbot') return;
 
     const next = resolvePilotState(pressed.current);
     const store = useWorldStore.getState();
-    store.setPilot(next.movement, next.lookHorizontal, next.lookVertical);
+    store.setPilot(next.movement, next.lookHorizontal, next.lookVertical, next.boost, next.speed);
+
+    if (status !== 'ready') return;
 
     const commands: Array<Promise<void>> = [];
 
@@ -66,6 +75,29 @@ export function PilotOverlay() {
       store.addLog('Pilot command failed', message, 'error');
     }
   }, [sendCommand, status]);
+
+  const pressCodes = useCallback(
+    (codes: string[]) => {
+      const activeKeys = pressed.current;
+      codes.forEach((code) => activeKeys.add(code));
+      void syncPilot();
+    },
+    [syncPilot],
+  );
+
+  const releaseCodes = useCallback(
+    (codes: string[]) => {
+      const activeKeys = pressed.current;
+      codes.forEach((code) => activeKeys.delete(code));
+      void syncPilot();
+    },
+    [syncPilot],
+  );
+
+  const stopPilot = useCallback(() => {
+    pressed.current.clear();
+    void syncPilot();
+  }, [syncPilot]);
 
   useEffect(() => {
     if (!isPilotMode) return;
@@ -114,14 +146,16 @@ export function PilotOverlay() {
 
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('keyup', onKeyUp);
+    window.addEventListener('blur', stopPilot);
 
     return () => {
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener('blur', stopPilot);
       activeKeys.clear();
       void syncPilot();
     };
-  }, [isPilotMode, syncPilot]);
+  }, [isPilotMode, stopPilot, syncPilot]);
 
   if (reactorModel !== 'lingbot') {
     return null;
@@ -138,16 +172,135 @@ export function PilotOverlay() {
         <span>{labelMovement(pilotMovement)}</span>
         <span>{labelLook(pilotLookHorizontal, pilotLookVertical)}</span>
       </div>
+      <div className="pilot-overlay__meters" aria-label="Pilot speed">
+        <span style={{ width: `${pilotBoost ? 100 : 62}%` }} />
+      </div>
+      <div className="pilot-pad" aria-label="Drone touch controls">
+        <PilotPadButton
+          active={pilotLookHorizontal === 'left'}
+          codes={['KeyQ']}
+          label="Yaw left"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          <ArrowLeft size={14} />
+        </PilotPadButton>
+        <PilotPadButton
+          active={pilotMovement === 'forward'}
+          codes={['KeyW']}
+          label="Forward"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          <ArrowUp size={14} />
+        </PilotPadButton>
+        <PilotPadButton
+          active={pilotLookHorizontal === 'right'}
+          codes={['KeyE']}
+          label="Yaw right"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          <ArrowRight size={14} />
+        </PilotPadButton>
+        <PilotPadButton
+          active={pilotMovement === 'strafe_left'}
+          codes={['KeyA']}
+          label="Strafe left"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          A
+        </PilotPadButton>
+        <button className="pilot-pad__button pilot-pad__button--stop" onPointerDown={stopPilot} title="Stop" type="button">
+          <Square size={12} />
+        </button>
+        <PilotPadButton
+          active={pilotMovement === 'strafe_right'}
+          codes={['KeyD']}
+          label="Strafe right"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          D
+        </PilotPadButton>
+        <PilotPadButton
+          active={pilotLookVertical === 'up'}
+          codes={['KeyR']}
+          label="Look up"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          R
+        </PilotPadButton>
+        <PilotPadButton
+          active={pilotMovement === 'back'}
+          codes={['KeyS']}
+          label="Back"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          <ArrowDown size={14} />
+        </PilotPadButton>
+        <PilotPadButton
+          active={pilotLookVertical === 'down'}
+          codes={['KeyF']}
+          label="Look down"
+          onPress={pressCodes}
+          onRelease={releaseCodes}
+        >
+          F
+        </PilotPadButton>
+      </div>
       <div className="pilot-overlay__keys">
         <Keyboard size={13} />
         <span>Arrows: fly/yaw</span>
         <span>WASD: move</span>
         <span>Space: stop</span>
         <span>
-          <Gauge size={12} /> Shift: boost
+          <Gauge size={12} /> {pilotBoost ? `Boost ${pilotSpeed}` : `Speed ${pilotSpeed}`}
         </span>
       </div>
     </aside>
+  );
+}
+
+interface PilotPadButtonProps {
+  active: boolean;
+  children: ReactNode;
+  codes: string[];
+  label: string;
+  onPress: (codes: string[]) => void;
+  onRelease: (codes: string[]) => void;
+}
+
+function PilotPadButton({ active, children, codes, label, onPress, onRelease }: PilotPadButtonProps) {
+  function press(event: PointerEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    onPress(codes);
+  }
+
+  function release(event: PointerEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    onRelease(codes);
+  }
+
+  return (
+    <button
+      className={`pilot-pad__button ${active ? 'pilot-pad__button--active' : ''}`}
+      onPointerCancel={release}
+      onPointerDown={press}
+      onPointerLeave={release}
+      onPointerUp={release}
+      title={label}
+      type="button"
+    >
+      {children}
+    </button>
   );
 }
 
@@ -168,6 +321,7 @@ function resolvePilotState(keys: Set<string>) {
   else if (keys.has('KeyF')) lookVertical = 'down';
 
   return {
+    boost: keys.has('ShiftLeft'),
     lookHorizontal,
     lookVertical,
     movement,
