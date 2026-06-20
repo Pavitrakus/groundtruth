@@ -88,6 +88,16 @@ const HEADLINE_VARIANTS: Record<DemoDataMode, string[]> = {
   ],
 };
 
+const WORLD_BEHAVIOR_VARIANTS = [
+  'tall monoliths unfold from the ground like live order books becoming architecture',
+  'rivers of luminous particles trace capital flows through the terrain',
+  'glass weather fronts bend around the city as if volatility has mass',
+  'floating data islands drift at different depths with soft cinematic parallax',
+  'signal towers pulse across the horizon while the ground slowly reconfigures',
+  'mirror lakes reflect aurora bands that respond to fear and greed',
+  'impossible bridges assemble and dissolve as market pressure changes',
+] as const;
+
 export async function fetchCrypto(): Promise<CryptoTick> {
   const response = await axios.get(`${COINGECKO}/simple/price`, {
     timeout: 8000,
@@ -373,6 +383,7 @@ function buildFallbackSnapshot(location: LocationPreset): DataSnapshot {
     newsHeadline: `${location.label} fallback pulse active; synthetic signal preserving the demo loop`,
     newsPulse,
     volatilityIndex,
+    worldBehavior: pick(WORLD_BEHAVIOR_VARIANTS),
     systemPressure: measureSystemPressure(volatilityIndex),
     dataSource: 'fallback',
     lastUpdated: Date.now(),
@@ -409,6 +420,7 @@ function randomizeDemoSnapshot(
     newsPulse,
     systemPressure: clamp(volatilityIndex * 0.58 + weather.windSpeed * 0.46, 0, 100),
     volatilityIndex,
+    worldBehavior: pick(WORLD_BEHAVIOR_VARIANTS),
   };
 }
 

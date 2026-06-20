@@ -22,6 +22,8 @@ const MIN_BOOT_MS = 1200;
 
 export default function App() {
   const reactorModel = useWorldStore((state) => state.reactorModel);
+  const sceneRevision = useWorldStore((state) => state.sceneRevision);
+  const sessionSeed = useWorldStore((state) => state.sessionSeed);
   const [bootComplete, setBootComplete] = useState(false);
   const [tokenState, setTokenState] = useState<TokenState>({
     status: 'loading',
@@ -131,7 +133,7 @@ export default function App() {
 
   return (
     <ReactorProvider
-      key={reactorModel}
+      key={`${reactorModel}-${sessionSeed}-${sceneRevision}`}
       modelName={reactorModel}
       jwtToken={tokenState.token}
       connectOptions={{ autoConnect: true, maxAttempts: 12 }}

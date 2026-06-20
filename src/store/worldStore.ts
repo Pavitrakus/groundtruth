@@ -66,6 +66,7 @@ export interface WorldState {
   pilotSpeed: number;
   reactorModel: ReactorModel;
   reactorError: string | null;
+  sceneRevision: number;
   selectedLocationId: LocationId;
   sessionSeed: number;
   showcaseActive: boolean;
@@ -75,6 +76,7 @@ export interface WorldState {
   worldLog: WorldLogEntry[];
   worldMood: WorldMood;
   addLog: (event: string, prompt: string, source?: WorldLogEntry['source']) => void;
+  bumpSceneRevision: () => void;
   setAudioEnabled: (enabled: boolean) => void;
   setAudioVolume: (volume: number) => void;
   setConnectionStatus: (status: string) => void;
@@ -126,6 +128,7 @@ export const useWorldStore = create<WorldState>((set) => ({
   pilotSpeed: 10,
   reactorModel: 'helios',
   reactorError: null,
+  sceneRevision: 0,
   selectedLocationId: initialSession.selectedLocationId,
   sessionSeed: initialSession.sessionSeed,
   showcaseActive: false,
@@ -149,6 +152,10 @@ export const useWorldStore = create<WorldState>((set) => ({
         },
         ...state.worldLog.slice(0, 17),
       ],
+    })),
+  bumpSceneRevision: () =>
+    set((state) => ({
+      sceneRevision: state.sceneRevision + 1,
     })),
   setAudioEnabled: (audioEnabled) => set({ audioEnabled }),
   setAudioVolume: (audioVolume) => set({ audioVolume }),

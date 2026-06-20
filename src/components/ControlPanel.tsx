@@ -99,10 +99,8 @@ export function ControlPanel() {
       store.setWorldMood(mood);
       store.setPrompt(prompt);
       store.setReason(reason);
-      await sendCommand('set_prompt', {
-        prompt: store.reactorModel === 'lingbot' ? prompt.slice(0, 980) : prompt,
-      });
       store.addLog(`Manual override: ${labelFor(id)}`, prompt, 'manual');
+      store.bumpSceneRevision();
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Manual override failed';
       useWorldStore.getState().setReactorError(message);
@@ -149,14 +147,8 @@ export function ControlPanel() {
       store.setWorldMood(mood);
       store.setPrompt(prompt);
       store.setReason(reason);
-
-      if (status === 'ready') {
-        await sendCommand('set_prompt', {
-          prompt: store.reactorModel === 'lingbot' ? prompt.slice(0, 980) : prompt,
-        });
-      }
-
       store.addLog(`Custom signal: ${customData.assetSymbol}`, prompt, 'manual');
+      store.bumpSceneRevision();
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Custom signal failed';
       useWorldStore.getState().setReactorError(message);

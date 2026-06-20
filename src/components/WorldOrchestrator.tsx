@@ -140,7 +140,7 @@ export function WorldOrchestrator() {
       const opening = state.currentPrompt || getOpeningPrompt(controls);
 
       try {
-        await sendCommand('set_seed', { seed: state.sessionSeed });
+        await sendCommand('set_seed', { seed: state.sessionSeed + state.sceneRevision * 7919 });
 
         if (state.reactorModel === 'lingbot') {
           const seedImage = await createLingBotSeedImage(controls, state.worldMood);

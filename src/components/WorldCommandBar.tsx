@@ -81,6 +81,7 @@ export function WorldCommandBar() {
   async function pushDirectorPrompt(
     event: string,
     overrides: { frameMode?: FrameModeId; locationId?: LocationId; viewMode?: ViewModeId } = {},
+    restartScene = false,
   ) {
     const store = useWorldStore.getState();
     const controls = {
@@ -100,6 +101,11 @@ export function WorldCommandBar() {
       store.setReason(result.reason);
       store.addLog(event, result.prompt, 'manual');
 
+      if (restartScene) {
+        store.bumpSceneRevision();
+        return;
+      }
+
       if (status === 'ready') {
         const prompt = store.reactorModel === 'lingbot' ? result.prompt.slice(0, 980) : result.prompt;
         await sendCommand('set_prompt', { prompt });
@@ -115,7 +121,7 @@ export function WorldCommandBar() {
     const location = getLocationPreset(locationId);
     setLocation(locationId);
     setLocationOpen(false);
-    await pushDirectorPrompt(`Location set: ${location.label}`, { locationId });
+    await pushDirectorPrompt(`Location set: ${location.label}`, { locationId }, true);
   }
 
   async function chooseView(mode: ViewModeId) {
@@ -139,12 +145,12 @@ export function WorldCommandBar() {
       return;
     }
 
-    await pushDirectorPrompt(`View mode: ${getViewMode(mode).label}`, { viewMode: mode });
+    await pushDirectorPrompt(`View mode: ${getViewMode(mode).label}`, { viewMode: mode }, true);
   }
 
   async function chooseFrame(mode: FrameModeId) {
     setFrameMode(mode);
-    await pushDirectorPrompt(`Frame mode: ${getFrameMode(mode).label}`, { frameMode: mode });
+    await pushDirectorPrompt(`Frame mode: ${getFrameMode(mode).label}`, { frameMode: mode }, true);
   }
 
   function chooseModel(model: ReactorModel) {
